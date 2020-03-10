@@ -3,10 +3,7 @@ package com.controller;
 import com.config.EnvironmentConfig;
 import com.repository.Topic;
 import com.repository.User;
-import com.util.EncryptionDecryptionAES;
 import com.util.MailUtil;
-import com.util.RandomGenerator;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -47,7 +44,7 @@ public class GenericServiceController {
 
     /**
      * Created for possible data race (oid) between separate request-response logging
-     * @see this#serviceListener(HttpServletRequest, String, String, String, String, String);
+     * @see this#serviceListener(HttpServletRequest, String, String, String);
      */
     @RequestMapping(path = "/serviceCaller/{serviceName}/{methodName}",
             method = RequestMethod.POST,
@@ -59,9 +56,9 @@ public class GenericServiceController {
                 HttpServletRequest request,
                 @PathVariable("serviceName") String serviceName,
                 @PathVariable("methodName") String methodName,
-                @RequestBody String serviceBagJSON,
-                @RequestHeader(value = "username") String username,
-                @RequestHeader(value = "password") String password
+                @RequestBody String serviceBagJSON
+                //@RequestHeader(value = "username") String username,
+                //@RequestHeader(value = "password") String password
             ) throws JSONException
     {
         //cross-site scripting (XSS) icin request temizleme
