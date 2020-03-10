@@ -1,0 +1,145 @@
+***REACT JS ORTAM KURULUMU:
+
+1-NODE JS indir. --> Eğer zip olarak indirirsen Environment Variables da PATH keyine nodejs in zipinden çıkarttığın klasörün yer aldığı pathi ekle.
+
+Environment Variables da User variables altındaki PATH keyinin value alanına ekleme yapma:
+windows+R ile ÇALIŞTIRı aç. Şunu yaz: rundll32 sysdm.cpl,EditEnvironmentVariables. 
+PATH değerini editleyip istediğin keyi ekle.
+
+2-VS CODE indir. --> npm -v komutu ile npm düzgün kurulu mu kontrol et.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+***npm install komutuyla package.json daki dependenciesler yüklenirler.
+
+***webpack-config.js --> Dosyaları bundle eder.
+
+***react browser plugin -->state i tarayıcada görmek için eklenti
+
+***Componentlerde ilk değerleri null vermek yerine boş liste veya boş string ver.
+---------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> render() metodu saf halde olmalıdır. Yani bileşenin state’ini değiştirmemeli, aynı parametrelerle çağrıldığında hep aynı çıktıyı vermeli,
+ve internet tarayıcısı ile direkt olarak etkileşimde bulunmamalıdır.
+Eğer tarayıcı ile etkileşimde bulunmanız gerekirse, componentDidMount()‘ta veya diğer yaşam döngüsü metotlarında bu işlemi gerçekleştiriniz.
+
+render()‘ın saf halde tutulması, bileşen üzerinde daha kolay düşünmenizi sağlar.
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> Eğer shouldComponentUpdate() metodu false dönerse, render() metodu çağrılmaz.
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> constructor() içerisinde, setState() metodunu çağırmamalısınız. Eğer bileşeninizin yerel state’i kullanması gerekiyorsa,
+ilgili değişkenleri constructor içerisinde direkt olarak this.state‘e atayınız. this.state‘e direkt olarak atama yapmanız gereken
+tek yer constructor’dır. Diğer tüm metotlarda, this.setState()‘i kullanmanız gereklidir.
+
+constructor(props) {
+  super(props);
+  this.state = { counter: 0 };
+  this.handleClick = this.handleClick.bind(this);
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> state’e prop nesnelerinin içeriklerini atamayınız! Bu çok yaygın olarak yapılan bir hatadır:
+
+constructor(props) {
+ super(props);
+ // İşte bunu yapmayınız! 
+ this.state = { color: props.color };
+}
+Buradaki problemlerden birincisi, state’e props değerinin atanması gereksizdir. Çünkü this.props.color değeri direkt olarak kullanılabilir.
+İkinci problem ise, color prop’unda yapılan değişiklikler, state’e henüz yansıtılmadığı için hatalara neden olur.
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> mapStateToProps:
+map’leme işlemi yaparak state’imizde o anda ne varsa onu component’iniz içerisinde props olarak kullanmamızı sağlayan bir tanımdır.
+Yani state e propsdan istediğin elemanı çek. Örnek:
+
+const mapStateToProps = state => {
+  return pick(state.global, ['failUrl', 'errorMessage', 'transactionId'])
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> Farklı state objelerinden istenilen elemanları tek propsa ekleme:
+
+const mapStateToProps = state => {
+  const { global, documents } = state
+  return {
+    ...pick(global, [
+      'transactionId',
+      'applicationNo',
+      'nationalIdentityNo',
+      'result',
+      'hasError',
+      'errorMessage',
+      'companyCode',
+      'basketType'
+    ]),
+    ...pick(documents, [
+      'mustChoice', ...CONTACT_CHANNELS])
+  }          
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> STYLE ekleme:
+
+  const boxStyle={
+    color: "#0057b8",
+    fontSize: "16px"
+  }       
+  return (        
+    <Fragment>
+<div style={boxStyle}>
+</div>
+</Fragment>
+  )
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> BUTTON ekleme:
+
+const buttonStyles = {         
+marginTop: "0px"          
+};
+return (  
+<RedButton type="button" onClick={this.redirectToN11} style={buttonStyles}>
+Alışverişe Devam
+</RedButton>
+)
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> React Input Maskeli Gösterim:
+
+-->type="password" EKLE
+
+<Input
+    name="motherMaidenName"
+    placeholder="Doğrulama kodu"
+    hasError={errors.motherMaidenName && touched.motherMaidenName}
+    maxLength="155"
+    label="FibaAnahtar"
+    rules={{ onlyText: true }}
+    type="password"
+/>
+---------------------------------------------------------------------------------------------------------------------------------------------
+***React da componentlere null vermek yerine boş değer ata.
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> GUID oluşturma:
+
+if(window.location.search === '?n11Banner'){
+      function guid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+      }
+      const paramString = "?channelCode=120&companyCode=N11&companyName=N11.com&banner=1&orderId=999999&basketAmount=500.00&redirect=0&transactionId="+guid();
+      params = new URLSearchParams(paramString)
+    }
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+>>> RGB yazma:
+ 
+ const thumbStyle = {
+        backgroundColor: `rgb(${123}, ${123}, ${123})`
+    };
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,133 @@
+*@PostConstruct --> Eklenen metot sunucu tarafından tetiklenir ve çalıştırılır. Üstüne geldiği metot hiçbir yerden çağrılmamasına rağmen çalışır.
+  @RestController = @Controller + @ResponseBody
+  @Controller => Spring MVC Controller
+  @ResponseBody => converts the response to JSON/XML automatically
+-----------------------------------------------------------------------------------------------------------------------------------------------
+*Spread operator:
+public void myMethod(String... strings){
+    // method body
+}
+
+--> Bu parametre String dizisi alır ve Şu şekillerde çağrılabilir:
+myMethod(); // Likely useless, but possible
+myMethod("one", "two", "three");
+myMethod("solo");
+myMethod(new String[]{"a", "b", "c"})
+-----------------------------------------------------------------------------------------------------------------------------------------------
+*NESTED SORGU:
+SELECT * FROM NDV_USER_CHANNELS where channel_code = 'TB' and client_no not in( SELECT client_no FROM NDV_USER_CHANNELS where channel_code = 'INT' or channel_code = 'CARD'); 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+*Bir sınıf elemanlarını yazdıran metot:
+
+public String toString() {
+  StringBuilder result = new StringBuilder();
+  String newLine = System.getProperty("line.separator");
+
+  result.append( this.getClass().getName() );
+  result.append( " Object {" );
+  result.append(newLine);
+
+  //determine fields declared in this class only (no fields of superclass)
+  Field[] fields = this.getClass().getDeclaredFields();
+
+  //print field names paired with their values
+  for ( Field field : fields  ) {
+    result.append("  ");
+    try {
+      result.append( field.getName() );
+      result.append(": ");
+      //requires access to private field:
+      result.append( field.get(this) );
+    } catch ( IllegalAccessException ex ) {
+      System.out.println(ex);
+    }
+    result.append(newLine);
+  }
+  result.append("}");
+
+  return result.toString();
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+*Yer imi olarak JS Çalıştırma
+javascript:(function(){
+document.getElementsByName("nationalIdentityNo")[0].value="38467147425";
+document.getElementsByName("mobileNumber")[0].focus;
+document.getElementsByName("mobileNumber")[0].value="5442812255";
+document.getElementsByName("agreedPolicy")[0].checked=true;
+})();
+------------------------------------------------------------------------------------------------------------------------------------------------
+*DB connection pool exception:
+Connection pool un dolmuş olması önemli bir sorun. Eğer uygulama içerisindeki bir koddan dolayı olduysa live da tüm sunucularda aynı şekilde problem yaratacaktır.
+Özellikle hibernate ile ilgili düzenleme yapan arkadaşların kodlarını gözden geçirmelerini iyi olacaktır. Genelde session oluşturulduktan sonra flush edilmediği durumlarda bu sorunu yaşıyoruz.
+------------------------------------------------------------------------------------------------------------------------------------------------
+*responsive -uyumlu- olayı 2 şekilde gerçekleşir:
+1- Genişliği esnek verirsin (%) kullanımı gibi.
+2- media queries kullanımı yani sizin şu ekran genişliğin de şu olsun,şu genişlikte şu olsun olayını yapmak için.
+------------------------------------------------------------------------------------------------------------------------------------------------
+*Java Dilinde Serialization (Serileştirme)
+Java’da Serializable arayüzünü gerçekleyen her nesne bir byte dizisi haline çevrilebilir ve disk üzerinde (bir dosyada) saklanabilir. 
+Daha sonra bu nesne tekrar geri elde edilebilir. Hatta bu bir network ortamında farklı platformlarda bile gerçekleştirilebilir. 
+Yani windows platformunda serileştirdiğiniz bir nesneyi gidip linux platformunda geri elde edebilirsiniz. Data’nın prezentasyonunu, 
+byte sırasını vs. düşünmenize gerek yoktur. Java tüm bunları çözümleyecektir. Çünkü Java platform bağımsızdır. 
+Nesne serileştirme uygulamalarımızda bir çok yerde kullanabileceğimiz bir özelliktir. 
+Ama serileştirme özellikle Java Bean’ler ile birlikte kullanılır. 
+Çünkü bir bean kullanıldığında bean’in konfigürasyon bilgileri genellikle design time’da belirlenir. 
+Bu bilgilerin bir şekilde saklanması ve program çalıştırıldığında da tekrar elde edilip bean’e aktarılması gerekir. 
+İşte nesne serileştirmesi bu görevi yerine getirebilir. Bu verilen sadece kullanım alanlarından sadece bir tanesine örnektir. 
+Bir çok yerde serileştirmeden faydalanabiliriz. Nesneyi serileştirmek oldukça basit bir işlemdir. 
+Nesnenin Serializable ara yüzünü (interface) gerçeklemesi yeterlidir.
+-------------------------------------------------------------------------------------------------------------------------------
+*XOR Swap: bitsel operator: 
+XOR operatörünün sonucu ancak ve ancak her iki operand da birbirinden farklıysa 1 değerini almaktadır.
+Bu sonuç bize şifreleme algoritmasında büyük bir kolaylık sağlayacaktır. 
+a = a ^ b;
+b = a ^ b;
+a = a ^ b;
+-------------------------------------------------------------------------------------------------------------------------------
+*SOAP Servisler:
+SOAP datayı transfer etmek için kullanılır.
+XML datayı bir format içinde sunma şeklidir.
+WSDL kullanıma açık olan servisleri tanımlamak için kullanılır. 
+--------------------------------------------------------------------------------------------------------------------------------
+*Hibernate:
+Nesneye yönelik yazılım ve ilişkisel veritabanı kullanımındam doğan Hibernate bir nesne/ilişkisel eşleme (Object/Relational Mapping) orm aracı
+Java sınıflarından veritabanı tablolarına dönüşümü ya da Java veri tiplerinden 
+SQL veri tiplerine dönüşümü gerçekleştirir. Ayrıcı veri sorgulama ve veri çekme işlemlerini de kullanıcı için sağlar. 
+Criteria lar var SQL yazmaktan kurtarmaktadır.
+JDBC ile de veri tabanına erişmek mümkündür.
+1SessionFactory sınıfları yaratımı masraflı olduğundan uygulama boyunca sadece birtane yaratılacağını garanti edin.
+Bunun için Singleton Pattern yapısını kullanabilirsiniz.
+--------------------------------------------------------------------------------------------------------------------------------
+*Reflection (yansıtma):
+Runtime da o anki sanal makinede olan sınıfların , 
+metodları, yapıcıları, üst sınıfları ve değişkenleri hakkında bilgiler alabiliriz .
+Yani bir sınıfa ait olan sabitleri ve metod tanımlamaların hepsini tespit edebiliriz.
+--------------------------------------------------------------------------------------------------------------------------------
+*Seperation of Concerns:
+geliştirilecek farklı özellikleri belli birimlere (sınıf ya da modül) 
+ayırarak bu özelliklere sahip birimleri belli alanda (yani paketlere) konuşlandırabiliriz.
+Yapılan bu ayırma işlemi projenin hem okunabilirliğini hem anlaşılabilirliğini ve hem de bakımını kolaylaştıracaktır.
+--------------------------------------------------------------------------------------------------------------------------------
+*Aspect-Oriented Programming:
+Aspect birimleri sayesinde kopyalama işlerinden de sıyrılmış oluyoruz. Tek bir ilgiyi bir modülde yazıp bağlanması gerektiği yerlere bağlayarak çalışmasını sağlıyoruz
+AOP ayrıca önemli Agile programlama prensiplerinden “You aren’t gonna need it” (YAGNI) pratik yapmanıza imkan verir. 
+Asıl sistem kodlarını değiştirmeden ayrı aspect birimleri uygulayarak gerektiğinde mevcut sistemin mekanizmasını bozmadan
+istebilen fonksiyonelliği çıkarabilirsiniz. Yeni fonksiyonaliteleri mevcuta etki vermeden ekleyebilirsiniz.
+--------------------------------------------------------------------------------------------------------------------------------
+*Test Driven Development
+Bug’ları uygulama PROD’a çıkmadan bulup, çözebilirsek maliyetleri de o kadar azaltabilme şansına sahip oluruz.
+TDD’de bunun için mutlaka ama mutlaka test ilk sırada yazılmalıdır.
+Elimizde otomatize testlerimiz vardır, değişiklikler her defasında manuel test edilmek zorunda kalınmaz
+Önce kodu yazıp sonradan bunların testini yazmak TDD olmaz.
+1. Bir test yazılır.
+2. Test başarısız olur.
+3. Test başarılı hale getirilir.
+4. Mevcut bütün testlerin başarılı olması sağlanır.
+5. Kod refactor edilir. Yani kodda iyileştirme ve(ya) temizleme yapılır.
+--------------------------------------------------------------------------------------------------------------------------------
+*Servlets:
+Yazacağımız servletlerin çalıştırılabilmesi için bir servlet containera gereksinimimiz olacak. 
+Servlet container olarak Tomcat 8 kullanacağız.bu servletlere hangi urller üzerinden erişileceğini tanımlamak gereklidir.
+Bu tanımları yapmak için web.xml adında bir xml dosyası kullanabilir veya Servlet sınıflarının üstünde anotasyon kullanabiliriz.
+

@@ -1,0 +1,87 @@
+ctrl+alt+T = TERMINAL
+compgen -u = all users 
+compgen -g = all groups
+
+
+<DOCKER>
+1- platform eşitliği sağlar. Test-dev-prod platformaları eşitler
+2- sürekli entegrasyon(CI) kolaylığı
+3- mikroservis mimari için hızlı kullanılabilir olması
+3- kaynak verimi: hypervispor gibi farklı os ihtiyacı yok.
+-------------------------------------------------------------------------------------------------------
+<KOMUTLAR>
+
+--> docker statü kontrolü(başlamış mı?)			: systemctl status docker
+--> docker başlatma								: systemctl start docker
+--> docker network oluştur						: docker network create networkAdı
+--> docker network listesi						: docker network ls
+--> image indirme				 				: docker pull hello-world(imageAdı)
+--> ubuntu image indirme				 		: docker pull ubuntu
+--> spesifik adresten image indirme				: docker pull repoAdı/imageAdı:imageTag
+--> image arama					 				: docker search imageAdı
+--> container oluştur 			 				: docker run imageAdı
+					 			* run komutu image eğer daha önceden Pull edilmediyse
+								öncelikle Image’ı Pull etmekte ve sonra çalıştırmaktadır.
+--> container oluştur(terminali attach ederek)  : docker run -it imageAdı CMD
+--> container başlat 			 				: docker start containerID
+--> container durdur 			 				: docker stop containerID
+--> container acil durdur 			 			: docker kill containerID
+--> container duraklat			 				: docker pause containerID
+--> container durakladıysa devam ettir			: docker unpause containerID
+--> stopped container silme		 				: docker rm containerID
+--> çalışan container silme		 				: docker rm -f containerID
+--> tüm containerleri silme						: docker rm $(docker ps -aq)
+--> tüm containerleri durdurma					: docker stop $(docker ps -aq)
+--> image silme					 				: docker rmi imageAdı
+--> image i zorla silme					 		: docker rmi -f imageAdı
+--> tüm imageleri silme							: docker rmi $(docker images -aq)
+--> ilişkisiz(containersız) imageleri silme 	: docker rmi $(docker images -q -f dangling=true)
+--> ilişkisiz(containersız) volumleri silme 	: docker volume rm $(docker volume ls -f dangling=true -q)
+--> Çalışan containerlar 		 				: docker ps
+--> Tüm containerler     		 				: docker ps -a
+--> Container hakkında detaylı bilgi 			: docker inspect containerID
+--> Image hakkında detaylı bilgi 				: docker inspect imageAdı
+--> ilişkisiz(containersız) imageleri listele 	: docker images -q -f dangling=true
+--> ilişkisiz(containersız) volumleri listele 	: docker volume ls -f dangling=true
+--> Çalışan containerlar 		 				: docker ps
+--> Container’ı tekrar çalıştır         		: docker start -a containerID
+								* -a parametresi stop durumda olan Container’ın tekrar
+								başlatılırken terminal’in Container’a tekrar attach
+								edilmesini (bağlanmasını) ister.-a parametre olmadan
+								çalıştırılırsa consola sadece containerID yazar. detached
+								modda çalışan Container’ların çıktıları alttaki komutla görülebilir. 
+--> container logu								: docker logs containerID
+--> detached conteinerı attach et			    : docker attach containerID
+--> grupları görme								: groups
+--> grup değiştirme								: newgrp - docker
+--> container adi değiştir						: docker rename containerAdı yeniAd
+--> image listele(local)						: docker images
+--> tüm container id leri						: docker ps -aq
+--> containerda top komutu						: docker top containerID
+--> docker bilgi								: docker info
+--> çalışan conteiner terminalinde komut koş    : docker exec containerID Komut
+--> çalışan conteinerda terminal aç			    : docker exec -it containerID /bin/bash
+
+--> tomcat container create						: docker container create --publish 8091:8080 --name my-tomcat-container tomcat:8.0
+--> image build									: docker build -f Dockerfile -t dockererkandeneme/docker-spring-boot ./
+--> container çalıştır							: docker container run -it --publish 8081:8080 -d dockererkandeneme/docker-spring-boot
+								* -d eklemezsen terminalin attach olur, gelen uygulama loglarını basar.
+
+JAR APP ve DOCKER:
+- app paketlendikten sonra(targetda jar oluşunca):
+
+IMAGE OLUŞTUR --> sudo docker build -t dockererkandeneme/docker-erkan-deneme .
+CONTAINER OLUŞTUR VE app i belli bir network te RUN ET --> 
+sudo docker run --network dockerdenemeerkan-network --name docker-erkan-deneme -p 8080:8080 dockererkandeneme/docker-erkan-deneme
+
+-------------------------------------------------------------------------------------------------------
+<HATALAR>
+
+HATA: Got permission denied while trying to connect to the Docker daemon socket...
+ÇÖZÜM:  sudo komutu olmadan yazılan docker komutlarında oluyor. sudo kullanmak 
+		istemiyorsan bir dockergroup oluştur ve kullanıcını bu gruba ekle
+		
+		sudo groupadd docker
+		sudo usermod -aG docker $USER
+		
+		grup değiştir veya pc kapa aç(reboot et)

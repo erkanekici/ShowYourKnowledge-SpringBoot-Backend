@@ -1,0 +1,361 @@
+*******JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8*******
+*******JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8*******
+*******JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8**************JAVA 8*******
+---------------------------------------------------------------------------------------------------------------------------	
+---------------------------------------------------------------------------------------------------------------------------	
+static String findNumberInList(List<Integer> arr, int k) {
+    return arr.stream().anyMatch(x->x == k) ? "YES" : "NO";
+}
+	
+---------------------------------------------------------------------------------------------------------------------------	
+static void filterString() {
+	List<String> lines = Arrays.asList("spring", "node", "java");
+	List<String> result = lines.stream()                // convert list to stream
+				.filter(line -> !"java".equals(line))     // we dont like mkyong
+                .collect(Collectors.toList());              // collect the output and convert streams to a List
+
+	result.forEach(System.out::println);                //output : spring, node
+}
+
+---------------------------------------------------------------------------------------------------------------------------	
+//SCANNER'dan okuma:
+nextBoolean()	Reads a boolean value from the user
+nextByte()		Reads a byte value from the user
+nextDouble()	Reads a double value from the user.
+nextFloat()		Reads a float value from the user
+nextInt()		Reads a int value from the user.
+nextLine() 		String okur. Öncesinde başka bir okuma işlemi varsa diğer satırı okumaya geçmek için bir defa nextLine() çağrılmalı
+next()			Boşluk karakterine kadar kelimeyi okur
+nextLong()		Reads a long value from the user
+nextShort()		Reads a short value from the user
+
+---------------------------------------------------------------------------------------------------------------------------	
+//Girilen Stringleri SCANNER ile okuma
+
+	private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        
+        //Dizi sayısı alınıyor        
+        int n = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        //Dizi elemanları alınıyor
+        for(int i=0; i<n; i++){
+            String text = scanner.nextLine();              
+            System.out.println(text);
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+        }        
+    }
+
+---------------------------------------------------------------------------------------------------------------------------
+//Girilen string dizisinin elemanlarını int e çevirip içindeki eşleşen eleman sayısını bulan method:
+
+static int findPairElementCount(int[] ar) {
+    List<Integer> elements = new ArrayList<Integer>();
+    int count=0;
+    for(int i=0; i<ar.length; i++){
+        elements.add(ar[i]);            
+        int matched=0;
+        for(int j=0; j<elements.size(); j++){
+            if(ar[i]==ar[j]){
+                matched++;
+            }
+        }
+        if(matched%2==0){
+            count++;
+        }                                 
+    }
+    return count;
+}
+
+private static final Scanner scanner = new Scanner(System.in);
+
+public static void main(String[] args) throws IOException {
+	BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+	
+	//Dizi boyutu alınıyor
+	int n = scanner.nextInt();
+    scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+    int[] array = new int[n];
+	
+	//Dizi elemanları alınıyor(1 3 10 2)
+    String[] arItems = scanner.nextLine().split(" ");
+    scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+	//String Dizi elemanları int e çevriliyor
+    for (int i = 0; i < n; i++) {
+        int arItem = Integer.parseInt(arItems[i]);
+        ar[i] = arItem;
+    }
+
+    int result = sockMerchant(array);
+	
+	bufferedWriter.write(String.valueOf(result));
+    bufferedWriter.newLine();
+
+    bufferedWriter.close();
+	scanner.close();		
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+//Diziyi ters çevirme:
+
+import java.util.Arrays;
+import org.apache.commons.lang3.ArrayUtils;
+
+public class Solution {
+	public static void main(String[] args) {
+		
+		int[] arr = { 7, 9, 5, 1, 3 };
+		ArrayUtils.reverse(arr);
+		System.out.println(Arrays.toString(arr));
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+//Java Map (Key,Value):
+	
+	Map<String,Integer> map = new HashMap<String,Integer>(); 
+	for(int i = 0; i < 3; i++){
+		map.put(new Integer(i).toString(),new Integer(i);
+	}	
+	if(map.containsKey("2")){
+        System.out.println(s+"="+map.get(s));
+    }
+	
+---------------------------------------------------------------------------------------------------------------------------
+//  Sayı yuvarlama(round)
+	
+	import java.lang.Math;
+	static void solve(double meal_cost, int tip_percent, int tax_percent) {
+        System.out.println(
+        Math.round(meal_cost+(meal_cost*tip_percent/100)+(meal_cost*tax_percent/100)));
+    }
+
+---------------------------------------------------------------------------------------------------------------------------
+*******JS**************JS**************JS**************JS**************JS**************JS**************JS*******
+*******JS**************JS**************JS**************JS**************JS**************JS**************JS*******
+*******JS**************JS**************JS**************JS**************JS**************JS**************JS*******
+
+//Konsoldan girdi okuma ve Diziye obje ekleme
+
+function getCount(objects) {
+    let count = 0;
+    objects.map(o => {             
+        if(o.x===o.y){
+            count++;
+        }
+    });
+    return count;
+}
+
+function main() {
+    const n = +(readLine());
+    let objects = [];
+    
+    for (let i = 0; i < n; i++) {
+        const [a, b] = readLine().split(' ');
+        
+        objects.push({x: +(a), y: +(b)});
+    }
+    
+    console.log(getCount(objects));
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+
+//throw error in Js 
+function isPositive(a) {     
+    if(a < 0){
+        throw new Error("Negative Error");
+    }else if(a === 0){
+        throw new Error("Zero Error");
+    }else{
+        return "YES"; 
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------	
+//Stringi int ve float çevirme
+
+function performOperation(secondInteger, secondDecimal, secondString) {
+   
+    //Number('123');  // returns 123
+    //Number('12.3'); // returns 12.3
+   
+    const firstInteger = 4;
+    console.log(firstInteger+parseInt(secondInteger,10))
+    
+    const firstDecimal = 4.0;
+    console.log(firstDecimal+parseFloat(secondDecimal))
+    
+    const firstString = 'HackerRank ';
+    console.log(firstString + secondString)
+}
+
+---------------------------------------------------------------------------------------------------------------------------	
+//Sesli ve sesiz harfleri bulan method
+
+function vowelsAndConsonants(s) {
+    var vowel_list = 'aeiou';
+    var consonants_list = 'bcdfghjklmnpqrstvwxyz';
+
+    for(var x = 0; x < s.length ; x++){
+        if (vowel_list.indexOf(s[x].toLowerCase()) !== -1){
+            console.log(s[x])
+        }
+    }
+    for(var x = 0; x < s.length ; x++){
+        if (consonants_list.indexOf(s[x].toLowerCase()) !== -1){
+            console.log(s[x])
+        }
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------	
+REGEX global (g) or multi-line (m) flag:
+The global flag prevents regex from returning after the first match. 
+The multi-line flag makes ^ and $ match the start and end of the line (not the string).
+---------------------------------------------------------------------------------------------------------------------------	
+//Girilen string için baş harfi ve son harfi sesli harf mi kontrolü yapan method:
+//Sadece baş harf kontrolü: /[aeiou]/.test(s.charAt(0))   
+
+function regexVar() {    
+   return re = /^([aeiou]).*\1$/;
+}
+
+function main() {
+    const re = regexVar();
+    const s = readLine();
+    
+    console.log(re.test(s));
+}
+
+---------------------------------------------------------------------------------------------------------------------------	
+//Girilen stringi ters çeviren method:
+
+function reverseString(s) {
+    try{
+       var splitString = s.split(""); // var splitString = "hello".split("");
+       var reverseArray = splitString.reverse();
+       var joinArray = reverseArray.join(""); 
+       console.log(joinArray); 
+    }catch(error){
+        console.log(error.message)
+    }
+    finally{
+        console.log("input:" +s)
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------	
+//Faktöriyel:
+
+function factorial(n) {
+    let result = 1 
+    for (let i = n; i > 0; i--) {
+        result = result*i
+    }
+    return result
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+//Çemberin alanı ve çapı:
+
+function circleAreaAndPerimeter(n) {
+	const PI = Math.PI;
+    const r = readLine();    
+    // Print the area of the circle:
+     console.log(PI*r*r)
+    // Print the perimeter of the circle:
+    console.log(2*PI*r)
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+// Number array içindeki elemanlardan elemanları tekrarsız ve sıralı yeni array üretme
+
+function getSecondLargest(nums) {
+	
+	// dizideki tekrarlı elemanlar sete dönüştürülerek çıkarılır.
+    const uniqueSet = new Set(nums);
+	
+	// set tekrar diziye çevrilir.
+    const simplifiedArray = [...uniqueSet];
+	
+	// dizi büyükten küşüğe sıralanır.
+    simplifiedArray.sort(function(a, b){return b-a});
+
+    if(simplifiedArray.length === 1){
+        return simplifiedArray[0];
+    }else{
+        return simplifiedArray[1];
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+//JS Inheritance ve class a method ekleme(prototype)
+  class Rectangle {
+      constructor(w, h) {
+          this.w = w;
+          this.h = h;
+      }
+  }
+  
+  Rectangle.prototype.area = function() {    
+      return this.w * this.h;
+  };
+  
+  class Square extends Rectangle {
+      constructor(w) {
+         super();
+         this.w = w;
+         this.h = w;
+      }
+  }
+  
+  const recObj = new Rectangle(3, 4);
+  const sqrObj = new Square(3);
+      
+  console.log(recObj.area());
+  console.log(sqrObj.area());
+
+---------------------------------------------------------------------------------------------------------------------------
+//Konsoldan girdi okuma ve Diziye obje ekleme
+  function getCount(objects) {
+      let count = 0;
+      objects.map(o => {             
+          if(o.x===o.y){
+              count++;
+          }
+      });
+      return count;
+  }
+    
+  function main() {
+      const n = +(readLine());
+      let objects = [];
+      
+      for (let i = 0; i < n; i++) {
+          const [a, b] = readLine().split(' ');
+          
+          objects.push({x: +(a), y: +(b)});
+      }
+      
+      console.log(getCount(objects));
+  }
+  
+---------------------------------------------------------------------------------------------------------------------------  
+//JS Object oluşturma ve elemanlarını yazdırma
+function Rectangle(a, b) { 
+  const rectangle = { 
+    length: a, width: b, perimeter: 2 * (a + b), area: 2 * a * b 
+  }; 
+  for (var propName in rectangle) {
+    var propValue = rectangle[propName]; 
+    console.log(propName, propValue); 
+  } 
+}
+
+

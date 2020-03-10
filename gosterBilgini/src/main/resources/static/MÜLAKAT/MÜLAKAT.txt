@@ -1,0 +1,78 @@
+Hibernate:
+Nesneye yönelik yazýlým ve iliþkisel veritabaný kullanýmýndam doðan Hibernate bir nesne/iliþkisel eþleme (Object/Relational Mapping) orm aracý
+Java sýnýflarýndan veritabaný tablolarýna dönüþümü ya da Java veri tiplerinden 
+SQL veri tiplerine dönüþümü gerçekleþtirir. Ayrýcý veri sorgulama ve veri çekme iþlemlerini de kullanýcý için saðlar. 
+Criteria lar var SQL yazmaktan kurtarmaktadýr.
+JDBC ile de veri tabanýna eriþmek mümkündür.
+1SessionFactory sýnýflarý yaratýmý masraflý olduðundan uygulama boyunca sadece birtane yaratýlacaðýný garanti edin.
+Bunun için Singleton Pattern yapýsýný kullanabilirsiniz.
+
+
+Reflection (yansýtma):
+Runtime da o anki sanal makinede olan sýnýflarýn , 
+metodlarý, yapýcýlarý, üst sýnýflarý ve deðiþkenleri hakkýnda bilgiler alabiliriz .
+Yani bir sýnýfa ait olan sabitleri ve metod tanýmlamalarýn hepsini tespit edebiliriz.
+
+Seperation of Concerns:
+geliþtirilecek farklý özellikleri belli birimlere (sýnýf ya da modül) 
+ayýrarak bu özelliklere sahip birimleri belli alanda (yani paketlere) konuþlandýrabiliriz.
+Yapýlan bu ayýrma iþlemi projenin hem okunabilirliðini hem anlaþýlabilirliðini ve hem de bakýmýný kolaylaþtýracaktýr.
+
+Aspect-Oriented Programming:
+Aspect birimleri sayesinde kopyalama iþlerinden de sýyrýlmýþ oluyoruz. Tek bir ilgiyi bir modülde yazýp baðlanmasý gerektiði yerlere baðlayarak çalýþmasýný saðlýyoruz
+AOP ayrýca önemli Agile programlama prensiplerinden “You aren’t gonna need it” (YAGNI) pratik yapmanýza imkan verir. 
+Asýl sistem kodlarýný deðiþtirmeden ayrý aspect birimleri uygulayarak gerektiðinde mevcut sistemin mekanizmasýný bozmadan
+istebilen fonksiyonelliði çýkarabilirsiniz. Yeni fonksiyonaliteleri mevcuta etki vermeden ekleyebilirsiniz.
+
+Test Driven Development
+Bug’larý uygulama PROD’a çýkmadan bulup, çözebilirsek maliyetleri de o kadar azaltabilme þansýna sahip oluruz.
+TDD’de bunun için mutlaka ama mutlaka test ilk sýrada yazýlmalýdýr.
+Elimizde otomatize testlerimiz vardýr, deðiþiklikler her defasýnda manuel test edilmek zorunda kalýnmaz
+Önce kodu yazýp sonradan bunlarýn testini yazmak TDD olmaz.
+1. Bir test yazýlýr.
+2. Test baþarýsýz olur.
+3. Test baþarýlý hale getirilir.
+4. Mevcut bütün testlerin baþarýlý olmasý saðlanýr.
+5. Kod refactor edilir. Yani kodda iyileþtirme ve(ya) temizleme yapýlýr.
+
+
+Servlets:
+Yazacaðýmýz servletlerin çalýþtýrýlabilmesi için bir servlet containera gereksinimimiz olacak. 
+Servlet container olarak Tomcat 8 kullanacaðýz.bu servletlere hangi urller üzerinden eriþileceðini tanýmlamak gereklidir.
+Bu tanýmlarý yapmak için web.xml adýnda bir xml dosyasý kullanabilir veya Servlet sýnýflarýnýn üstünde anotasyon kullanabiliriz.
+
+
+SOAP Servisler:
+SOAP datayý transfer etmek için kullanýlýr.
+XML datayý bir format içinde sunma þeklidir.
+WSDL kullanýma açýk olan servisleri tanýmlamak için kullanýlýr. 
+UDDI ise hangi servislerin kullanýma hazýr olduðunu belirtmek için kullanýlýr. 
+Sonuç olarak tüm bu teknolojilerle yapýlmak istenen; 
+tamamen platform baðýmsýz bir þekilde uygulamalarýn iþ kurallarý uygulamak ve data alýþveriþini saðlamaktýr.
+
+Bu teknoloji uygulama geliþtirme dilinden de baðýmsýzdýr. Perl ile yazýlmýþ bir web servisi, 
+Java ile yazýlmýþ bir masaüstü uygulama veya C# ile yazýlmýþ bir web uygulamasý tarafýndan kullanýlabilir.
+Web servislerin temelinde ortam, mimari ya da programlama dili gözetmeksizin iki programý haberleþtirmek
+
+JAX-WS Javanýn, SOAP(Simple Object Access Protocol) web servisleri geliþtirmek için daha doðrusu arayüzü.yani bir API
+Vakti zamanýnda Javanýn RPC(Remote Procedure Call) kütüphanesinin yerine geçmek için geliþtirilmiþtir.
+
+WS-I (Web Services Interoperability) bir web servis standartý olarak düþünülebilir.
+Web servislerin ürettiði arayüzlerin ayný ya da benzer olmasý gerekmektedir. 
+Ýþte WS-I bu arayüzlerin yani WSDL dosyalarýnýn nasýl olmasý gerektiðini tanýmlamaktadýr. 
+Þu anda aktif olarak kullanýlan Kodlama Çeþitlerine göre WSDL lar dan WS-I tarafýndan desteklenenler:
+    RPC/literal
+    Document/encoded
+    Document/literal
+Bu sebepten kullanacaðýnýz JAX-WS kütüphanesi de bu üç tip kodlama imkaný saðlamaktadýr. 
+
+-------------------------------------------------------------------------------------------------------------------------------
+XOR Swap: bitsel operator: 
+XOR operatörünün sonucu ancak ve ancak her iki operand da birbirinden farklýysa 1 deðerini almaktadýr.
+Bu sonuç bize þifreleme algoritmasýnda büyük bir kolaylýk saðlayacaktýr. 
+a = a ^ b;
+b = a ^ b;
+a = a ^ b;
+
+
+
