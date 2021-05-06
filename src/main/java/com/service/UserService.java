@@ -1,4 +1,4 @@
-package com.connector;
+package com.service;
 
 import com.model.UserConstants;
 import com.repository.DBUtil;
