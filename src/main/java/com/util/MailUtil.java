@@ -45,7 +45,7 @@ public class MailUtil {
             mimeMessageHelper.setText(htmlText, true);
 
             mimeMessageHelper.setTo(emailAddress);
-            mimeMessageHelper.setFrom("unaldisevil@gmail.com");
+            mimeMessageHelper.setFrom("h.erkanekici@gmail.com");
             mimeMessageHelper.addInline(imageId,imagePath);
 
             //ATTACHMENT

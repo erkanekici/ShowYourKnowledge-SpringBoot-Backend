@@ -1,4 +1,4 @@
-package com.util;
+package com.service;
 
 import com.model.CaptchaResponse;
 import org.slf4j.Logger;
@@ -12,10 +12,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 
 @Service
-public class CaptchaValidator {
+public class CaptchaValidatorService {
 
   private static final String GOOGLE_RECAPTCHA_ENDPOINT = "https://www.google.com/recaptcha/api/siteverify";
-  private static final Logger logger = LoggerFactory.getLogger(CaptchaValidator.class);
+  private static final Logger logger = LoggerFactory.getLogger(CaptchaValidatorService.class);
 
   @Value("${google.recaptcha.secret}")
   private String recaptchaSecret;

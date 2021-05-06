@@ -1,4 +1,4 @@
-package com.util;
+package com.model;
 
 import java.util.Arrays;
 import java.util.Optional;

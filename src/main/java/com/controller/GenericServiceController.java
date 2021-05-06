@@ -1,8 +1,10 @@
 package com.controller;
 
 import com.config.EnvironmentConfig;
+import com.model.UsableServices;
 import com.repository.Topic;
 import com.repository.User;
+import com.service.CaptchaValidatorService;
 import com.util.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -46,7 +48,7 @@ public class GenericServiceController {
     @Autowired
     DBUtil dbUtil;
     @Autowired
-    private CaptchaValidator captchaService;
+    private CaptchaValidatorService captchaService;
     @Autowired
     MailUtil mailUtil;
     @Autowired
