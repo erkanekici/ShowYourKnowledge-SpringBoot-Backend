@@ -1,5 +1,7 @@
 #CONFIG
 */application.yml
+*.yml
+
 
 #COMPILE
 target
