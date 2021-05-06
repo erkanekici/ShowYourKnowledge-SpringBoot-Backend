@@ -1,0 +1,44 @@
+app:
+    profile: dev
+google:
+    recaptcha:
+        secret: 6LdQQsUUAAAAALeEoytAuIWENrOfSdeZ1Zg0V3gU
+logging:
+    file:
+        path: C:/Users/asus/IdeaProjects/gosterBilgini_BE/logs
+spring:
+    datasource:
+        url: ###
+        username: ###
+        password: ###
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    jpa:
+        open-in-view: false
+    mail:
+        #Bunlari sifrele MAIL
+        host: smtp.gmail.com
+        password: ###
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    connectiontimeout: 10000
+                    ssl:
+                        trust: smtp.gmail.com
+                    starttls:
+                        enable: true
+                    timeout: 10000
+                    writetimeout: 10000
+                    #starttls:
+                    #   required: true
+                    #socketFactory:
+                    #   class: javax.net.ssl.SSLSocketFactory
+        username: ###
+        #default-encoding: UTF-8
+        #protocol: smtp
+        #test-connection: false
