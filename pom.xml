@@ -7,7 +7,7 @@
 
     <groupId>com.gosterBilgini_BE</groupId>
     <artifactId>gosterBilgini_BE</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>gosterBilgini</name>
@@ -34,6 +34,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -71,6 +77,11 @@
 <!--            <groupId>org.liquibase</groupId>-->
 <!--            <artifactId>liquibase-core</artifactId>-->
 <!--            <version>3.4.1</version>-->
+<!--        </dependency>-->
+        <!-- Gson-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.code.gson</groupId>-->
+<!--            <artifactId>gson</artifactId>-->
 <!--        </dependency>-->
         <dependency>
             <groupId>org.json</groupId>
@@ -126,18 +137,15 @@
             <artifactId>jquery</artifactId>
             <version>3.4.1</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.google.code.gson</groupId>-->
-<!--            <artifactId>gson</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-<!--                <version>2.2.2.RELEASE</version>-->
+<!--                <version>2.2.4.RELEASE</version>-->
                 <executions>
                     <execution>
                         <goals>
@@ -151,4 +159,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

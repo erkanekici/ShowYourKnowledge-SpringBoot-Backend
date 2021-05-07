@@ -28,15 +28,15 @@ public class DatabaseConfig {
 
     @Value("${spring.datasource.username}")
     public void setUsername(String username) {
-      DatabaseConfig.username = username;
+      this.username = username;
     }
     @Value("${spring.datasource.password}")
     public void setPassword(String password) {
-        DatabaseConfig.password = password;
+        this.password = password;
     }
     @Value("${spring.datasource.url}")
     public void setUrl(String url) {
-    DatabaseConfig.url = url;
+        this.url = url;
     }
 
     @Bean

@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Welcome</title>
+
+    <style>
+        .body {
+            background-color:powderblue;
+        }
+        .center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
 </head>
-<body>
-    Running
+<body class="body">
+    <div class="center">
+        <span th:if="${user != null and user != 'guest'}">
+            <h1>
+                <span th:text="'Welcome'" />
+                <b th:text="${user}" />
+            </h1>
+        </span>
+        <span th:if="${user == null or user == 'guest'}">
+            <h1> Welcome Guest </h1>
+        </span>
+
+        <h2 th:text="'Status: ' + ${status}" />
+        <h2 th:text="'Version: ' + ${version}" />
+        <!-- <p><a href="/">refresh</a></p> -->
+    </div>
 </body>
 </html>

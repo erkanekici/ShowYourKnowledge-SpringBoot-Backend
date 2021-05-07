@@ -12,7 +12,7 @@ public class EnvironmentConfig {
 
     @Value("${app.profile}")
     public void setProfile(String profile){
-        EnvironmentConfig.profile=profile;
+        this.profile=profile;
     }
 
     public static String decrypt(String sOrigHex) {
