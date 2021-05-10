@@ -1,4 +1,4 @@
-package com.repository;
+package com.dataAccess;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

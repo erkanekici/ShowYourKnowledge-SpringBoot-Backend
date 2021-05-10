@@ -1,6 +1,6 @@
 package com.service;
 
-import com.model.CaptchaResponse;
+import com.controller.model.CaptchaResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

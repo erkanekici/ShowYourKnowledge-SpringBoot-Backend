@@ -1,8 +1,9 @@
 package com.service;
 
-import com.model.UserConstants;
-import com.repository.DBUtil;
-import com.repository.User;
+import com.common.CommonConstants;
+import com.controller.constants.ApiConstants;
+import com.dataAccess.DBUtil;
+import com.dataAccess.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class UserService {
                 })
                 .filter(item -> {
                     String[] arrOfDateStr = getArrOfDateStr(registerTimeInterval);
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(UserConstants.DATE_FORMATTER);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CommonConstants.USER_DATE_FORMATTER);
                     LocalDate startDate = LocalDate.parse(arrOfDateStr[0], formatter);
                     LocalDate endDate = LocalDate.parse(arrOfDateStr[1], formatter);
                     return (item.getDbCreatedDateTime().toLocalDate().isAfter(startDate) || item.getDbCreatedDateTime().toLocalDate().isEqual(startDate))

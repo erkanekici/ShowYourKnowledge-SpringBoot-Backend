@@ -1,4 +1,4 @@
-package com.util;
+package com.common;
 
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
@@ -6,6 +6,14 @@ import java.util.HashMap;
 
 @Service
 public final class GetHTTPRequestParams {
+
+    private static GetHTTPRequestParams _this = null;
+
+    public static GetHTTPRequestParams getInstance() {
+        if (_this == null)
+            _this = new GetHTTPRequestParams();
+        return _this;
+    }
 
     public HashMap getIPandUserAgent(HttpServletRequest request) {
 

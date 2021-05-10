@@ -1,12 +1,20 @@
-package com.util;
+package com.common;
 
-import com.model.UsableServices;
+import com.controller.handler.UsableServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
 public final class MaskingUtil {
+
+    private static MaskingUtil _this = null;
+
+    public static MaskingUtil getInstance() {
+        if (_this == null)
+            _this = new MaskingUtil();
+        return _this;
+    }
 
     public JSONObject maskRequest(JSONObject request,String methodName) throws JSONException {
         JSONObject maskedRequest = new JSONObject(request.toString());

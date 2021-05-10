@@ -1,11 +1,11 @@
-package com.util;
+package com.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.model.SpecialDataTypes;
-import com.repository.Topic;
-import com.repository.User;
+import com.controller.handler.SpecialDataTypes;
+import com.dataAccess.Topic;
+import com.dataAccess.User;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
@@ -16,9 +16,17 @@ import java.util.List;
 
 public class ObjectConversionUtil {
 
+    private static ObjectConversionUtil _this = null;
+
+    public static ObjectConversionUtil getInstance() {
+        if (_this == null)
+            _this = new ObjectConversionUtil();
+        return _this;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(ObjectConversionUtil.class);
 
-    public static String serializeObject(Object data) {
+    public String serializeObject(Object data) {
         try {
             ByteArrayOutputStream baOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream ooOutputStream = new ObjectOutputStream(baOutputStream);
@@ -30,7 +38,7 @@ public class ObjectConversionUtil {
         }
     }
 
-    public static Object deserializeObject(String data) {
+    public Object deserializeObject(String data) {
         try {
             byte[] bytes = Hex.decodeHex(data.toCharArray());
             if (bytes != null) {
@@ -44,7 +52,7 @@ public class ObjectConversionUtil {
         }
     }
 
-    public static String writeDataAsString(Object data) {
+    public String writeDataAsString(Object data) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(data);
@@ -53,7 +61,7 @@ public class ObjectConversionUtil {
         }
     }
 
-    public static <T> T readDataByDataType(String data, String dataType) {
+    public <T> T readDataByDataType(String data, String dataType) {
         if (SpecialDataTypes.isObjectDataType(dataType)) {
             try{
                 if (SpecialDataTypes.USER_LIST.name().equals(dataType)) {

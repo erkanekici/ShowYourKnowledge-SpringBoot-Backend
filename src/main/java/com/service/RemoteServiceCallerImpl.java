@@ -1,7 +1,7 @@
 package com.service;
 
 import com.config.EnvironmentConfig;
-import com.util.MaskingUtil;
+import com.common.MaskingUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +35,11 @@ public class RemoteServiceCallerImpl implements RemoteServiceCaller {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Accept", MediaType.APPLICATION_XML_VALUE);
-            if("prod".equals(EnvironmentConfig.profile)){
+            if("prod".equals(EnvironmentConfig.getProfile())){
                // headers.add("username", EnvironmentConfig.esbUsername);
                // headers.add("password", EnvironmentConfig.esbPassword);
             }
-            else if("test".equals(EnvironmentConfig.profile) || "dev".equals(EnvironmentConfig.profile)){
+            else if("test".equals(EnvironmentConfig.getProfile()) || "dev".equals(EnvironmentConfig.getProfile())){
                 if("OnlineStoreCreditService".equals(serviceName)){
                     headers.add("username", "vuser");
                     headers.add("password", "test");

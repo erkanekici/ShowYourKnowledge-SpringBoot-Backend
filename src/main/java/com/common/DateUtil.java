@@ -1,6 +1,5 @@
-package com.util;
+package com.common;
 
-import com.model.DayCountOfYear;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,10 +8,15 @@ import java.time.format.DateTimeFormatter;
 
 public final class DateUtil {
 
-    private DateUtil() {
+    private static DateUtil _this = null;
+
+    public static DateUtil getInstance() {
+        if (_this == null)
+            _this = new DateUtil();
+        return _this;
     }
 
-    public static double dateDiff360(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear, boolean methodUS) {
+    public double dateDiff360(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear, boolean methodUS) {
         if (startDay == 31) {
             --startDay;
         } else if (methodUS && startMonth == 2 && (startDay == 29 || (startDay == 28 && !isLeapYear(startYear)))) {
@@ -34,7 +38,7 @@ public final class DateUtil {
         return endDay + endMonth * 30 + endYear * DayCountOfYear.D_360.getInt() - startDay - startMonth * 30 - startYear * 360;
     }
 
-    public static double dateDiff360(LocalDate startDate, LocalDate endDate, boolean methodUS) {
+    public double dateDiff360(LocalDate startDate, LocalDate endDate, boolean methodUS) {
         int startDay = startDate.getDayOfMonth();
         int startMonth = startDate.getMonthValue();
         int startYear = startDate.getYear();
@@ -45,11 +49,11 @@ public final class DateUtil {
         return dateDiff360(startDay, startMonth, startYear, endDay, endMonth, endYear, methodUS);
     }
 
-    public static boolean isLeapYear(int year) {
+    public boolean isLeapYear(int year) {
         return (((year % 4) == 0) && ((year % 100) != 0) || ((year % 400) == 0));
     }
 
-    public static boolean isValidDate(String date) {
+    public boolean isValidDate(String date) {
         DateFormat sdf = new SimpleDateFormat("ddMMyyyy");
         sdf.setLenient(false);
         try {
@@ -60,7 +64,7 @@ public final class DateUtil {
         return true;
     }
 
-    public static String convertToStiring(LocalDate date) {
+    public String convertToString(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         return date.format(formatter);
     }

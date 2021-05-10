@@ -1,11 +1,15 @@
-package com.controller;
+package com.controller.api;
 
 import com.config.EnvironmentConfig;
-import com.model.UsableServices;
-import com.repository.Topic;
-import com.repository.User;
+import com.controller.constants.ApiConstants;
+import com.controller.model.CaptchaResult;
+import com.controller.handler.UsableServices;
+import com.dataAccess.Topic;
+import com.dataAccess.User;
 import com.service.CaptchaValidatorService;
-import com.util.*;
+import com.common.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,10 +39,16 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import com.repository.DBUtil;
+import com.dataAccess.DBUtil;
 
 @RestController
 @CrossOrigin(value = "*")
+@RequestMapping(path = "/serviceCaller",
+        method = RequestMethod.POST,
+        produces = {ApiConstants.CONTENT_TYPE_APPLICATION_JSON_VALUE_WITH_UTF8},
+        consumes = {ApiConstants.CONTENT_TYPE_ALL,ApiConstants.CONTENT_TYPE_APPLICATION_JSON_VALUE_WITH_UTF8})
+@ResponseBody
+@Api(value = "GenericService")
 public class GenericServiceController {
 
     private final Object lock = new Object();
@@ -56,16 +65,8 @@ public class GenericServiceController {
     @Autowired
     MaskingUtil maskingUtil;
 
-    /**
-     * Created for possible data race (oid) between separate request-response logging
-     * @see this#serviceListener(HttpServletRequest, String, String, String);
-     */
-    @RequestMapping(path = "/serviceCaller/{serviceName}/{methodName}",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    @CrossOrigin(value = "*")
+    @PostMapping(value = "/{serviceName}/{methodName}")
+    @ApiOperation(value = "", notes = "Generic service call")
     public String serviceListener(
                 HttpServletRequest request,
                 @PathVariable("serviceName") String serviceName,
@@ -141,7 +142,7 @@ public class GenericServiceController {
         }
 
         try {
-            CaptchaResultHolder captchaHolder = isCaptchaValidated(methodName, serviceRequest);
+            CaptchaResult captchaHolder = isCaptchaValidated(methodName, serviceRequest);
             if(!captchaHolder.isValidated()){
                 //return captchaNotValidJSON(captchaHolder.getMessage());
             }
@@ -285,9 +286,9 @@ public class GenericServiceController {
 
         //Aktivasyon Tamamlandi, LOGIN yonlendir
         String redirectUrl = "http://localhost:3000";
-        if ("prod".equals(EnvironmentConfig.profile)) {
+        if ("prod".equals(EnvironmentConfig.getProfile())) {
             redirectUrl = "PROD URL";
-        } else if ("test".equals(EnvironmentConfig.profile)) {
+        } else if ("test".equals(EnvironmentConfig.getProfile())) {
             redirectUrl = "TEST URL";
         }
         redirectUrl = redirectUrl + "/activation";
@@ -318,30 +319,30 @@ public class GenericServiceController {
         return localDateTimeStart.format(formatter);
     }
 
-    private CaptchaResultHolder isCaptchaValidated(String methodName, JSONObject serviceRequest){
+    private CaptchaResult isCaptchaValidated(String methodName, JSONObject serviceRequest){
         try {
             if ((methodName.equals("Login") || methodName.equals("Register")) && serviceRequest.has("captcha")){
                 if(JSONObject.NULL.equals(serviceRequest.get("captcha"))){
                     //Tekrar Gonder Butonundan Geliyor
-                    return new CaptchaResultHolder(true, "Captcha Is Valid.");
+                    return new CaptchaResult(true, "Captcha Is Valid.");
                 }
                 String captcha = serviceRequest.getString("captcha");
                 Boolean isValidCaptcha = captchaService.validateCaptcha(captcha);
                 if (!isValidCaptcha) {
                     String message = "Geçersiz Giriş, lütfen tekrar deneyiniz";
                     logger.error(message);
-                    return new CaptchaResultHolder(false, message);
+                    return new CaptchaResult(false, message);
                 } else {
-                    return new CaptchaResultHolder(true, "Captcha Is Valid.");
+                    return new CaptchaResult(true, "Captcha Is Valid.");
                 }
             }
             else {
-                return new CaptchaResultHolder(true, "");
+                return new CaptchaResult(true, "");
             }
         }catch(Exception e){
             logger.error("Captcha Validation Error: " + serviceRequest.toString());
             e.printStackTrace();
-            return new CaptchaResultHolder(false, "Teknik Hata");
+            return new CaptchaResult(false, "Teknik Hata");
         }
     }
 

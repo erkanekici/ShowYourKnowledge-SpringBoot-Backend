@@ -1,4 +1,4 @@
-package com.util;
+package com.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;

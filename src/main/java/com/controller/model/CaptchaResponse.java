@@ -1,4 +1,4 @@
-package com.model;
+package com.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.util;
+package com.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +10,18 @@ import java.util.Base64;
 
 public class EncryptionDecryptionAES {
 
+    private static EncryptionDecryptionAES _this = null;
+
+    public static EncryptionDecryptionAES getInstance() {
+        if (_this == null)
+            _this = new EncryptionDecryptionAES();
+        return _this;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(EncryptionDecryptionAES.class);
     private static final String key = "FBMWK2WtihHracSGJKsw2ier2130jbcQ"; //256 bit key
 
-    public static String encrypt(String value) throws Exception {
+    public String encrypt(String value) throws Exception {
         try{
             byte[] IV = new byte[16];
             SecureRandom random = new SecureRandom();
@@ -32,7 +40,7 @@ public class EncryptionDecryptionAES {
         }
     }
 
-    public static String decrypt(String value, int num) throws Exception{
+    public String decrypt(String value, int num) throws Exception{
         try{
             byte[] IV= Base64.getUrlDecoder().decode((value.substring(44)));
             IvParameterSpec ivSpec = new IvParameterSpec(IV);

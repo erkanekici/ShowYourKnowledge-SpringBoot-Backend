@@ -1,6 +1,6 @@
 package com.config;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+//import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import java.math.BigInteger;
 
@@ -8,11 +8,25 @@ import java.math.BigInteger;
 //@PropertySource({"file:${spring.config.location}"})
 public class EnvironmentConfig {
 
-    public static String profile;
+    private static String profile;
+    private static String projectVersion;
 
     @Value("${app.profile}")
     public void setProfile(String profile){
         this.profile=profile;
+    }
+
+    @Value("${pom.version}")
+    public void setProjectVersion(String projectVersion){
+        this.projectVersion=projectVersion;
+    }
+
+    public static String getProfile() {
+        return profile;
+    }
+
+    public static String getProjectVersion() {
+        return projectVersion;
     }
 
     public static String decrypt(String sOrigHex) {

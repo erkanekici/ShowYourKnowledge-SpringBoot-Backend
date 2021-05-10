@@ -1,7 +1,7 @@
-package com.controller;
+package com.controller.api;
 
-import com.repository.DBUtil;
-import com.util.EncryptionDecryptionAES;
+import com.dataAccess.DBUtil;
+import com.common.EncryptionDecryptionAES;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +120,7 @@ public class DocumentController {
     private String decryptDocumentId(String documentID, String transactionID) {
         if (documentID != null && !documentID.isEmpty()) {
             try {
-                return EncryptionDecryptionAES.decrypt(documentID,44);
+                return EncryptionDecryptionAES.getInstance().decrypt(documentID,44);
             }
             catch (Exception e) {
                 logger.error("DocumentService Call - Error Unencrypted documentID - transactionID: " + transactionID + " - documentID: " + documentID);

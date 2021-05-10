@@ -1,6 +1,7 @@
-package com.util;
+package com.common;
 
 import java.util.concurrent.ThreadLocalRandom;
+
 public class RandomGenerator {
 
     private static RandomGenerator _this = null;
