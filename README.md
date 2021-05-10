@@ -3,8 +3,8 @@
 #### This project is the layer that meets the backend requirements of the Web UI layer of the ShowYourKnowledge project.
 
 It was created as a **Java 8 Spring Boot Maven** project.
-
 **NOTE:** The development of this project continues.
+
 ---
 - [Setup Local Development Environment](#setup-local-development-environment)
 ---
