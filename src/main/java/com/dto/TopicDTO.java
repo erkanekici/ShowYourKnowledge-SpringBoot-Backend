@@ -1,18 +1,18 @@
-package com.dataAccess;
+package com.dto;
 
 import lombok.Data;
 
 @Data
-public class Topic {
+public class TopicDTO {
 
     private String id;
     private String userid1;
     private String userid2;
 
-    public Topic() {
+    public TopicDTO() {
     }
 
-    public Topic(String id, String userid1, String userid2) {
+    public TopicDTO(String id, String userid1, String userid2) {
         this.id = id;
         this.userid1 = userid1;
         this.userid2 = userid2;

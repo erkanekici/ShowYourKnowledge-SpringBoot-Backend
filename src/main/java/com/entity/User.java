@@ -1,10 +1,11 @@
-package com.dataAccess;
+package com.entity;
 
 import lombok.Data;
 
 import java.time.OffsetDateTime;
 
 @Data
+// @MappedSuperclass BaseEntity de kullan bunu
 public class User {
 
     private String id;

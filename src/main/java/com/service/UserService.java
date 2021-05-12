@@ -1,9 +1,8 @@
 package com.service;
 
 import com.common.CommonConstants;
-import com.controller.constants.ApiConstants;
-import com.dataAccess.DBUtil;
-import com.dataAccess.User;
+import com.dao.DBUtil;
+import com.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

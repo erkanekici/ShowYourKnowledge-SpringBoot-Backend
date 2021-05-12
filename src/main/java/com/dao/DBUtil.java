@@ -1,5 +1,7 @@
-package com.dataAccess;
+package com.dao;
 
+import com.entity.Topic;
+import com.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

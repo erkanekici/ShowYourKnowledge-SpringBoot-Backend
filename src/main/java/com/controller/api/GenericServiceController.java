@@ -2,10 +2,10 @@ package com.controller.api;
 
 import com.config.EnvironmentConfig;
 import com.controller.constants.ApiConstants;
-import com.controller.model.CaptchaResult;
+import com.dto.CaptchaResult;
 import com.controller.handler.UsableServices;
-import com.dataAccess.Topic;
-import com.dataAccess.User;
+import com.entity.Topic;
+import com.entity.User;
 import com.service.CaptchaValidatorService;
 import com.common.*;
 import io.swagger.annotations.Api;
@@ -38,13 +38,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import com.dataAccess.DBUtil;
+import com.dao.DBUtil;
 
 @RestController
 @CrossOrigin(value = "*")
 @RequestMapping(path = "/serviceCaller",
-        method = RequestMethod.POST,
+//        method = RequestMethod.POST,
         produces = {ApiConstants.CONTENT_TYPE_APPLICATION_JSON_VALUE_WITH_UTF8},
         consumes = {ApiConstants.CONTENT_TYPE_ALL,ApiConstants.CONTENT_TYPE_APPLICATION_JSON_VALUE_WITH_UTF8})
 @ResponseBody

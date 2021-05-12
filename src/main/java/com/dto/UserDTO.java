@@ -1,4 +1,4 @@
-package com.controller.model;
+package com.dto;
 
 import lombok.Data;
 

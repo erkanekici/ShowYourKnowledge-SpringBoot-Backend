@@ -1,18 +1,18 @@
-package com.controller.model;
+package com.entity;
 
 import lombok.Data;
 
 @Data
-public class TopicDTO {
+public class Topic {
 
     private String id;
     private String userid1;
     private String userid2;
 
-    public TopicDTO() {
+    public Topic() {
     }
 
-    public TopicDTO(String id, String userid1, String userid2) {
+    public Topic(String id, String userid1, String userid2) {
         this.id = id;
         this.userid1 = userid1;
         this.userid2 = userid2;

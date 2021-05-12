@@ -1,6 +1,6 @@
 package com.controller.api;
 
-import com.dataAccess.DBUtil;
+import com.dao.DBUtil;
 import com.common.EncryptionDecryptionAES;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
