@@ -1,29 +1,24 @@
 package com.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
-public class Topic {
+@NoArgsConstructor
+@Entity
+@Table(name = "topic")
+public class Topic extends BaseEntity{
 
+    @Id
+    @NotNull
     private String id;
-    private String userid1;
-    private String userid2;
 
-    public Topic() {
-    }
+    @Column(name = "user_id_1")
+    private Long userId1;
 
-    public Topic(String id, String userid1, String userid2) {
-        this.id = id;
-        this.userid1 = userid1;
-        this.userid2 = userid2;
-    }
-
-//    @Override
-//    public String toString() {
-//        return "{\"id\":\"" + id + "\"," +
-//                "\"userid1\":\"" + userid1 + "\"," +
-//                "\"userid2\":\"" + userid2 + "\"," +
-//                "}";
-//    }
-
+    @Column(name = "user_id_2")
+    private Long userId2;
 }

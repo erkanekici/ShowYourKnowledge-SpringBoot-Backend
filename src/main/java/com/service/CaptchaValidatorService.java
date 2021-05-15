@@ -14,18 +14,20 @@ import java.util.Arrays;
 @Service
 public class CaptchaValidatorService {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaValidatorService.class);
+
   private static final String GOOGLE_RECAPTCHA_ENDPOINT = "https://www.google.com/recaptcha/api/siteverify";
-  private static final Logger logger = LoggerFactory.getLogger(CaptchaValidatorService.class);
+  private static final double MIN_SCORE = 0.5;
 
   @Value("${google.recaptcha.secret}")
   private String recaptchaSecret;
 
-  public boolean validateCaptcha(String captchaResponse){
+  public boolean validateCaptcha(String captcha){
     RestTemplate restTemplate = new RestTemplate();
 
     MultiValueMap<String, String> requestMap = new LinkedMultiValueMap<>();
     requestMap.add("secret", recaptchaSecret);
-    requestMap.add("response", captchaResponse);
+    requestMap.add("response", captcha);
 
     CaptchaResponse apiResponse = restTemplate.postForObject(GOOGLE_RECAPTCHA_ENDPOINT, requestMap, CaptchaResponse.class);
 
@@ -33,15 +35,15 @@ public class CaptchaValidatorService {
       return false;
     }
 
-    logger.info("Captcha Response: " + apiResponse.getAction() + " " + apiResponse.getScore());
+    LOGGER.info("CaptchaValidatorService - captchaResponse: {} , score: {}", apiResponse.getAction(), apiResponse.getScore());
 
     if(apiResponse.getErrorCodes() != null){
-      logger.info("Captcha Errors: " + Arrays.toString(apiResponse.getErrorCodes().toArray()));
+      LOGGER.info("CaptchaValidatorService ERROR: {}", Arrays.toString(apiResponse.getErrorCodes().toArray()));
 //      if(Arrays.toString(apiResponse.getErrorCodes().toArray()).contains("timeout-or-duplicate")){
 //        return true;
 //      }
     }
 
-    return Boolean.TRUE.equals(apiResponse.getSuccess()) && apiResponse.getScore().doubleValue() >= 0.5;
+    return Boolean.TRUE.equals(apiResponse.getSuccess()) && apiResponse.getScore().doubleValue() >= MIN_SCORE;
   }
 }

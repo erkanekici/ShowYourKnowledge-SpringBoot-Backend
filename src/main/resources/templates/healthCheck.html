@@ -21,13 +21,13 @@
 </head>
 <body class="body">
     <div class="center">
-        <span th:if="${user != null and user != 'guest'}">
+        <span th:if="${userInfo != null and userInfo != 'guest'}">
             <h1>
                 <span th:text="'Welcome'" />
-                <b th:text="${user}" />
+                <b th:text="${userInfo}" />
             </h1>
         </span>
-        <span th:if="${user == null or user == 'guest'}">
+        <span th:if="${userInfo == null or userInfo == 'guest'}">
             <h1> Welcome Guest </h1>
         </span>
 

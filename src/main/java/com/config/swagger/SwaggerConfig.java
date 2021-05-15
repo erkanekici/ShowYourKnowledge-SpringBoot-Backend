@@ -13,8 +13,8 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket userApiDoc() {
-		return new SwaggerConfigurer(ApiConstants.ApiGroups.UserApi.NAME, ApiConstants.ApiGroups.UserApi.TITLE, ApiConstants.ApiGroups.UserApi.DESCRIPTION,
-				ApiConstants.ApiGroups.UserApi.PATH, EnvironmentConfig.getProjectVersion()).build();
+		return new SwaggerConfigurer(ApiConstants.ApiGroups.UserInfoApi.NAME, ApiConstants.ApiGroups.UserInfoApi.TITLE, ApiConstants.ApiGroups.UserInfoApi.DESCRIPTION,
+				ApiConstants.ApiGroups.UserInfoApi.PATH, EnvironmentConfig.getProjectVersion()).build();
 	}
 
 	@Bean

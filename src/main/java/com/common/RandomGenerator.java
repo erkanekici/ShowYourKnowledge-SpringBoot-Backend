@@ -1,5 +1,6 @@
 package com.common;
 
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomGenerator {
@@ -14,5 +15,12 @@ public class RandomGenerator {
 
     public String generateRandom() {
         return String.valueOf(System.currentTimeMillis() + ThreadLocalRandom.current().nextInt());
-    }}
+    }
+
+    public String generateUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+
+}
 

@@ -1,6 +1,6 @@
 package com.controller.api;
 
-import com.dao.DBUtil;
+//import com.dao.DBUtil;
 import com.common.EncryptionDecryptionAES;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -26,8 +26,8 @@ public class DocumentController {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
 
-    @Autowired
-    DBUtil dbTransactions;
+//    @Autowired
+//    DBUtil dbTransactions;
 
     @RequestMapping(value = "/document/{documentID}/{transactionID}")
     public ResponseEntity<InputStreamResource> viewDocument(@PathVariable String documentID,@PathVariable String transactionID) {
@@ -40,7 +40,7 @@ public class DocumentController {
 
         String lastCallDate = null;
         try{
-            lastCallDate = dbTransactions.getTransactionStartDateByDocumentId(transactionID,documentID);
+            //lastCallDate = dbTransactions.getTransactionStartDateByDocumentId(transactionID,documentID);
         } catch (Exception e){
             logger.error("DocumentService Call - DB Connection Error: " + documentID + " Error Detail: " + e.getStackTrace());
         }

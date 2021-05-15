@@ -5,7 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.controller.handler.SpecialDataTypes;
 import com.entity.Topic;
-import com.entity.User;
+import com.entity.UserInfo;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class ObjectConversionUtil {
         return _this;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(ObjectConversionUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectConversionUtil.class);
 
     public String serializeObject(Object data) {
         try {
@@ -65,17 +66,32 @@ public class ObjectConversionUtil {
         if (SpecialDataTypes.isObjectDataType(dataType)) {
             try{
                 if (SpecialDataTypes.USER_LIST.name().equals(dataType)) {
-                    return (T) new ObjectMapper().readValue(data, new TypeReference<List<User>>(){});
+                    return (T) new ObjectMapper().readValue(data, new TypeReference<List<UserInfo>>(){});
                 }
                 if (SpecialDataTypes.TOPIC_LIST.name().equals(dataType)) {
                     return (T) new ObjectMapper().readValue(data, new TypeReference<List<Topic>>(){});
                 }
             } catch (JsonProcessingException e){
-                logger.error("ObjectConversionUtil ERROR - readDataByDataType - data: {}, dataType: {}, Exception: {}", data, dataType, e.getMessage());
+                LOGGER.error("ObjectConversionUtil ERROR - readDataByDataType - data: {}, dataType: {}, Exception: {}", data, dataType, e.getMessage());
                 return null;
             }
         }
         return (T) data;
+    }
+
+    public  <T> T convertObjectByObject(Object o, TypeReference ref) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        return (T) mapper.convertValue(o, ref);
+    }
+
+    public  <T> T getObjectByJsonString(String jsonString, TypeReference ref) {
+        try {
+            return (T) new ObjectMapper().readValue(jsonString, ref);
+        } catch (JsonProcessingException e){
+            LOGGER.error("ObjectConversionUtil ERROR - getObjectByJsonString - jsonString: {}, Exception: {}", jsonString, e.getMessage());
+            return null;
+        }
     }
 
 }

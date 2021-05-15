@@ -7,6 +7,7 @@ It was created as a **Java 8 Spring Boot Maven** project.</br></br>
 
 ---
 - [Setup Local Development Environment](#setup-local-development-environment)
+- [Tips](#tips)
 ---
 
 ## Setup Local Development Environment
@@ -15,3 +16,6 @@ It was created as a **Java 8 Spring Boot Maven** project.</br></br>
 3- Setup an IDE(Eclipse, NetBeans, Intellij etc.) for Java development <br>
 4- Add Lombok plugin to your Java development IDE <br>
 5- Setup a local MYSQL database <br>
+
+##Tips
+**@Transactional:** If an error is thrown in the method to which this annotation is added, the db return is triggered.
