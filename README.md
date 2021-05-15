@@ -17,5 +17,5 @@ It was created as a **Java 8 Spring Boot Maven** project.</br></br>
 4- Add Lombok plugin to your Java development IDE <br>
 5- Setup a local MYSQL database <br>
 
-##Tips
+## Tips
 **@Transactional:** If an error is thrown in the method to which this annotation is added, the db return is triggered.
