@@ -24,14 +24,14 @@ import java.time.format.DateTimeFormatter;
 @CrossOrigin(value="*")
 public class DocumentController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DocumentController.class);
 
 //    @Autowired
 //    DBUtil dbTransactions;
 
     @RequestMapping(value = "/document/{documentID}/{transactionID}")
     public ResponseEntity<InputStreamResource> viewDocument(@PathVariable String documentID,@PathVariable String transactionID) {
-        logger.info("DocumentService Call - transactionID: " + transactionID + " - encryptedDocumentID: " + documentID);
+        LOGGER.info("DocumentService Call - transactionID: " + transactionID + " - encryptedDocumentID: " + documentID);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=dosya.pdf");
@@ -42,7 +42,7 @@ public class DocumentController {
         try{
             //lastCallDate = dbTransactions.getTransactionStartDateByDocumentId(transactionID,documentID);
         } catch (Exception e){
-            logger.error("DocumentService Call - DB Connection Error: " + documentID + " Error Detail: " + e.getStackTrace());
+            LOGGER.error("DocumentService Call - DB Connection Error: " + documentID + " Error Detail: " + e.getStackTrace());
         }
         if(lastCallDate != null){
             DateTimeFormatter formatter = DateTimeFormatter .ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -66,7 +66,7 @@ public class DocumentController {
         try {
             in=download(DOCUMENT_STORAGE_URL);
         }catch (Exception e){
-            logger.error("DocumentService Call - Error - transactionID: " + transactionID + " - URL: " + DOCUMENT_STORAGE_URL);
+            LOGGER.error("DocumentService Call - Error - transactionID: " + transactionID + " - URL: " + DOCUMENT_STORAGE_URL);
             e.printStackTrace();
         }
 
@@ -123,7 +123,7 @@ public class DocumentController {
                 return EncryptionDecryptionAES.getInstance().decrypt(documentID,44);
             }
             catch (Exception e) {
-                logger.error("DocumentService Call - Error Unencrypted documentID - transactionID: " + transactionID + " - documentID: " + documentID);
+                LOGGER.error("DocumentService Call - Error Unencrypted documentID - transactionID: " + transactionID + " - documentID: " + documentID);
                 return null;
             }
         }
@@ -131,4 +131,50 @@ public class DocumentController {
             return null;
         }
     }
+
+
+    //    //PDF İçeriği iletme
+//    private ResponseEntity<InputStreamResource> xyz(@PathVariable String docId){
+//        ByteArrayInputStream in=null;
+//        String DOCUMENT_STORAGE_URL = "EnvironmentConfig.documentStorageUrlPrefix + decryptedDocumentId+EnvironmentConfig.documentStorageUrlSuffix";
+//        try {
+//            logger.info("DocumentService Call - documentID: " + " URL: " + DOCUMENT_STORAGE_URL);
+//            in=download(DOCUMENT_STORAGE_URL);
+//        }catch (Exception e){
+//            logger.error("DocumentService Call - UnknownError - documentID: " + " URL: " + DOCUMENT_STORAGE_URL);
+//            e.printStackTrace();
+//        }
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        LocalDateTime localDateTime=LocalDateTime.now();
+//        String formattedLocalDateTime = localDateTime.format(formatter);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//
+//        return ResponseEntity
+//                .ok()
+//                .headers(headers)
+//                .body(new InputStreamResource(in));
+//
+//    }
+//
+//    public static ByteArrayInputStream download(String urlname) throws IOException {
+//        URL url = new URL(urlname);
+//        HttpURLConnection conn = null;
+//        InputStream stream = null;
+//        try {
+//            conn = (HttpURLConnection) url.openConnection();
+//            stream = conn.getInputStream();
+//            final byte[] bytes = IOUtils.toByteArray(stream);
+//            return new ByteArrayInputStream(bytes);
+//        }
+//        finally {
+//            if (null != conn) {
+//                conn.disconnect();
+//            }
+//            if (null != stream) {
+//                IOUtils.closeQuietly(stream);
+//            }
+//        }
+//    }
 }

@@ -2,19 +2,21 @@ package com.dto;
 
 public class CaptchaResult {
 
-  boolean isValidated;
-  String message;
+    private boolean isValidated;
+    private String errCode;
+    private String errMessage;
 
-  public CaptchaResult(boolean isValidated, String message){
-    this.isValidated=isValidated;
-    this.message=message;
-  }
+    public CaptchaResult(boolean isValidated, String errCode, String errMessage){
+        this.isValidated = isValidated;
+        this.errCode = errCode;
+        this.errMessage = errMessage;
+    }
 
-  public boolean isValidated() {
+    public boolean isValidated() {
     return isValidated;
   }
 
-  public String getMessage() {
-    return message;
-  }
+    public String getErrCode() { return errCode; }
+
+    public String getErrMessage() { return errMessage; }
 }

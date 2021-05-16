@@ -146,23 +146,7 @@
 //            if(!captchaHolder.isValidated()){
 //                //return captchaNotValidJSON(captchaHolder.getMessage());
 //            }
-//            if("Login".equals(methodName)){
-//                UserInfoDTO userInfoDTO = userService.getUserInfoByEmailAndPassword(serviceRequest.getString("email"), serviceRequest.getString("password"));
-//                if(userInfoDTO == null){
-//                    logger.error("Login Error: " + serviceRequest.toString());
-//                    return classicError("Girdiğiniz e-posta ve şifre bilgisine ait kullanıcı bulunmamaktadır. Lütfen bilgilerinizi kontrol ediniz.");
-//                }
-////                if(userInfo.size() > 1){
-////                    //OLMAMASI GEREKEN BİR DURUM
-////                    logger.error("Login Error: " + serviceRequest.toString());
-////                    return classicError("Teknik bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.");
-////                }
-//                if(userInfoDTO.getActivity() != 1){
-//                    //BURADA Aktivasyon maili gönder
-//                    return classicError("Hesabınız henüz aktif edilmemiştir. Kayıtlı e-posta adresinize yeni aktivasyon maili gönderilmiştir.");
-//                }
-//                //LOGİN BAŞARILI userinfo bilgilerini dön
-//            }
+
 //            if("Register".equals(methodName)){
 //                String id = dbUtil.findUserIdByEmail(serviceRequest.getString("email"));
 //                if(id != null){
@@ -319,32 +303,7 @@
 //        return localDateTimeStart.format(formatter);
 //    }
 //
-//    private CaptchaResult isCaptchaValidated(String methodName, JSONObject serviceRequest){
-//        try {
-//            if ((methodName.equals("Login") || methodName.equals("Register")) && serviceRequest.has("captcha")){
-//                if(JSONObject.NULL.equals(serviceRequest.get("captcha"))){
-//                    //Tekrar Gonder Butonundan Geliyor
-//                    return new CaptchaResult(true, "Captcha Is Valid.");
-//                }
-//                String captcha = serviceRequest.getString("captcha");
-//                Boolean isValidCaptcha = captchaService.validateCaptcha(captcha);
-//                if (!isValidCaptcha) {
-//                    String message = "Geçersiz Giriş, lütfen tekrar deneyiniz";
-//                    logger.error(message);
-//                    return new CaptchaResult(false, message);
-//                } else {
-//                    return new CaptchaResult(true, "Captcha Is Valid.");
-//                }
-//            }
-//            else {
-//                return new CaptchaResult(true, "");
-//            }
-//        }catch(Exception e){
-//            logger.error("Captcha Validation Error: " + serviceRequest.toString());
-//            e.printStackTrace();
-//            return new CaptchaResult(false, "Teknik Hata");
-//        }
-//    }
+
 //
 //    private boolean isAllowedServiceCall(String serviceName, String methodName) {
 //        return UsableServices.anyMatch(serviceName, methodName);
@@ -385,88 +344,6 @@
 //        }
 //    }
 //
-//    private String captchaNotValidJSON(String errorMessage) throws JSONException {
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.accumulate("resultCode", 0);
-//        jsonObject.accumulate("errorMessage", errorMessage);
-//        jsonObject.accumulate("referenceCode", "");
-//        jsonObject.accumulate("adkOid", "");
-//        return jsonObject.toString();
-//    }
-//
-//    private String unknownError() throws JSONException {
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.accumulate("resultCode", 0);
-//        jsonObject.accumulate("errorMessage", "Bilinmeyen bir hata oluştu");
-//        return jsonObject.toString();
-//    }
-//
-//    private String classicError(String errorMessage) throws JSONException {
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.accumulate("resultCode", 0);
-//        jsonObject.accumulate("errorMessage", errorMessage);
-//        return jsonObject.toString();
-//    }
-//
-//    private JSONObject abc() throws Exception{
-//        JSONObject esbJsonRequest = new JSONObject();
-//        esbJsonRequest.put("companyName","N11.com");
-//        JSONObject jsonObj= new JSONObject();
-//        jsonObj.put("categoryCode", "n11banner");
-//        jsonObj.put("productType", "n11banner");
-//        jsonObj.put("productName", "n11banner");
-//        jsonObj.put("productAmount", "500");
-//        jsonObj.put("count", "1");
-//        jsonObj.put("total", "500");
-//        JSONArray jsonArray = new JSONArray();
-//        jsonArray.put(jsonObj);
-//        esbJsonRequest.put("productTable",jsonArray);
-//
-//        return esbJsonRequest;
-//    }
-//
-//    //PDF İçeriği iletme
-//    private ResponseEntity<InputStreamResource> xyz(@PathVariable String docId){
-//        ByteArrayInputStream in=null;
-//        String DOCUMENT_STORAGE_URL = "EnvironmentConfig.documentStorageUrlPrefix + decryptedDocumentId+EnvironmentConfig.documentStorageUrlSuffix";
-//        try {
-//            logger.info("DocumentService Call - documentID: " + " URL: " + DOCUMENT_STORAGE_URL);
-//            in=download(DOCUMENT_STORAGE_URL);
-//        }catch (Exception e){
-//            logger.error("DocumentService Call - UnknownError - documentID: " + " URL: " + DOCUMENT_STORAGE_URL);
-//            e.printStackTrace();
-//        }
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        LocalDateTime localDateTime=LocalDateTime.now();
-//        String formattedLocalDateTime = localDateTime.format(formatter);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//
-//        return ResponseEntity
-//                .ok()
-//                .headers(headers)
-//                .body(new InputStreamResource(in));
-//
-//    }
-//
-//    public static ByteArrayInputStream download(String urlname) throws IOException {
-//        URL url = new URL(urlname);
-//        HttpURLConnection conn = null;
-//        InputStream stream = null;
-//        try {
-//            conn = (HttpURLConnection) url.openConnection();
-//            stream = conn.getInputStream();
-//            final byte[] bytes = IOUtils.toByteArray(stream);
-//            return new ByteArrayInputStream(bytes);
-//        }
-//        finally {
-//            if (null != conn) {
-//                conn.disconnect();
-//            }
-//            if (null != stream) {
-//                IOUtils.closeQuietly(stream);
-//            }
-//        }
-//    }
+
+
 //}

@@ -4,12 +4,10 @@ import org.springframework.http.MediaType;
 
 public final class ApiConstants {
 
-    public static final String RESPONSE_SUCCESS = "Success";
-    public static final String RESPONSE_FAILED = "Failed";
-    public static final String UNKNOWN_ERROR = "Bilinmeyen bir hata oluştu";
-    public static final int SUCCESSFUL_CODE = 1;
-    public static final int ERROR_CODE = 0;
+    public static final Long DEFAULT_USERID = 0L;
 
+    public static final int SUCCESSFUL_CODE = 1;
+    public static final int FAILED_CODE = 0;
 
     public static final String CONTENT_TYPE_APPLICATION_JSON_VALUE_WITH_UTF8 = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8";
     public static final String CONTENT_TYPE_ALL = MediaType.ALL_VALUE;

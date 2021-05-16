@@ -17,10 +17,10 @@ public class SwaggerConfig {
 				ApiConstants.ApiGroups.UserInfoApi.PATH, EnvironmentConfig.getProjectVersion()).build();
 	}
 
-	@Bean
-	public Docket documentApiDoc() {
-		return new SwaggerConfigurer(ApiConstants.ApiGroups.DocumentApi.NAME, ApiConstants.ApiGroups.DocumentApi.TITLE, ApiConstants.ApiGroups.DocumentApi.DESCRIPTION,
-				ApiConstants.ApiGroups.DocumentApi.PATH, EnvironmentConfig.getProjectVersion()).build();
-	}
+//	@Bean
+//	public Docket documentApiDoc() {
+//		return new SwaggerConfigurer(ApiConstants.ApiGroups.DocumentApi.NAME, ApiConstants.ApiGroups.DocumentApi.TITLE, ApiConstants.ApiGroups.DocumentApi.DESCRIPTION,
+//				ApiConstants.ApiGroups.DocumentApi.PATH, EnvironmentConfig.getProjectVersion()).build();
+//	}
 
 }

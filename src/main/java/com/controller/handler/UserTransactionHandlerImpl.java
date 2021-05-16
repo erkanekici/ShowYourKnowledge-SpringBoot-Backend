@@ -40,8 +40,13 @@ public final class UserTransactionHandlerImpl implements UserTransactionHandler 
     }
 
     @Override
-    public void logResponse(Long id, Long userId, String response) {
-        userTransactionService.saveResponseLog(id,userId,response);
+    public void logSuccessfulResponse(Long id, Long userId, String response) {
+        userTransactionService.saveSuccessfulResponseLog(id, userId, response);
+    }
+
+    @Override
+    public void logFailedResponse(Long id, Long userId, String response, String errorCode, String errorMessage) {
+        userTransactionService.saveFailedResponseLog(id, userId, response, errorCode, errorMessage);
     }
 
     @Override

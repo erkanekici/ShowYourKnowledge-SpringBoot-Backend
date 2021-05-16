@@ -14,6 +14,9 @@ public class UserTransactionsDTO extends BaseDTO{
     private String methodName;
     private String request;
     private String response;
+    private String resultCode;
+    private String errorCode;
+    private String errorMessage;
     private String clientIp;
 
 }

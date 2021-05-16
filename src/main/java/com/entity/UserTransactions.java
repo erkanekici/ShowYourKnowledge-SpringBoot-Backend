@@ -43,6 +43,15 @@ public class UserTransactions extends BaseEntity {
     @Column(name = "response")
     private String response;
 
+    @Column(name = "result_code")
+    private int resultCode;
+
+    @Column(name = "error_code")
+    private String errorCode;
+
+    @Column(name = "error_message")
+    private String errorMessage;
+
     @Column(name = "client_ip")
     private String clientIp;
 

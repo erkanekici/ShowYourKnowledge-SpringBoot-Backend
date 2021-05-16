@@ -35,8 +35,11 @@ public class UserServiceImpl implements UserService {
     public UserInfoDTO register(UserInfoDTO userInfoDTO) {
         //TODO kayıtlı email kontrolü yap
         UserInfo userInfo = ObjectConversionUtil.getInstance().convertObjectByObject(userInfoDTO, new TypeReference<UserInfo>(){}); //TODO map metoduna cevir
-        userInfo.setUserName(userInfo.getEmail());
+        userInfo.setUserName(userInfo.getEmail()); //TODO think
         userInfo = this.userInfoRepository.save(userInfo);
+
+        // TODO send activation mail
+
         return ObjectConversionUtil.getInstance().convertObjectByObject(userInfo, new TypeReference<UserInfoDTO>() {});
     }
 
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
                 return null;
             }
         } catch (Exception e){
-            //TODO nonuniqresult ex dönebilir
+            //TODO nonuniqresult ex burada dönebilir
             LOGGER.error("UserService ERROR - getUserInfoByEmailAndPassword - Exception: {}",e.getMessage());
             return null;
         }

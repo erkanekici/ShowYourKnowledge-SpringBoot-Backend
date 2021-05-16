@@ -1,7 +1,8 @@
 package com.service;
 
 import com.common.ObjectConversionUtil;
-import com.dao.UserTransactionsRepository;
+import com.controller.constants.ApiConstants;
+import com.dao.UserTransactionRepository;
 import com.dto.UserTransactionsDTO;
 import com.entity.UserTransactions;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -22,35 +23,48 @@ public class UserTransactionServiceImpl implements UserTransactionService{
 //    @Autowired
 //    UserTransactionsRepository userTransactionsRepository;
 
-    private final UserTransactionsRepository userTransactionsRepository;
-    public UserTransactionServiceImpl(UserTransactionsRepository userTransactionsRepository){
-        this.userTransactionsRepository = userTransactionsRepository;
+    private final UserTransactionRepository userTransactionRepository;
+    public UserTransactionServiceImpl(UserTransactionRepository userTransactionRepository){
+        this.userTransactionRepository = userTransactionRepository;
     }
 
     @Transactional
     @Override
     public Long saveRequestLog(UserTransactionsDTO userTransactionsDTO) {
         UserTransactions userTransactions = ObjectConversionUtil.getInstance().convertObjectByObject(userTransactionsDTO, new TypeReference<UserTransactions>(){}); //TODO map metoduna cevir
-        userTransactions = this.userTransactionsRepository.save(userTransactions);
+        userTransactions = this.userTransactionRepository.save(userTransactions);
         return userTransactions.getId();
     }
 
     @Transactional
     @Override
-    public void saveResponseLog(Long id, Long userId, String response) {
-        int updatedRows = userTransactionsRepository.setResponse(id, userId, response);
+    public void saveSuccessfulResponseLog(Long id, Long userId, String response) {
+        int updatedRows = userTransactionRepository.setSuccessfulResponse(id, userId, response, ApiConstants.SUCCESSFUL_CODE);
         if (updatedRows == 1) {
-            LOGGER.info("UserTransactionServiceImpl - saveResponseLog - Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
+            LOGGER.info("UserTransactionServiceImpl - saveSuccessfulResponseLog - Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         } else if (updatedRows == 0) {
-            LOGGER.error("UserTransactionServiceImpl ERROR - saveResponseLog - No Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
+            LOGGER.error("UserTransactionServiceImpl ERROR - saveSuccessfulResponseLog - No Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         } else{
-            LOGGER.error("UserTransactionServiceImpl ERROR - saveResponseLog - Multi Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
+            LOGGER.error("UserTransactionServiceImpl ERROR - saveSuccessfulResponseLog - Multi Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void saveFailedResponseLog(Long id, Long userId, String response, String errorCode, String errorMessage) {
+        int updatedRows = userTransactionRepository.setFailedResponse(id, userId, response, ApiConstants.FAILED_CODE, errorCode, errorMessage);
+        if (updatedRows == 1) {
+            LOGGER.info("UserTransactionServiceImpl - saveFailedResponseLog - Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
+        } else if (updatedRows == 0) {
+            LOGGER.error("UserTransactionServiceImpl ERROR - saveFailedResponseLog - No Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
+        } else{
+            LOGGER.error("UserTransactionServiceImpl ERROR - saveFailedResponseLog - Multi Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         }
     }
 
     @Override
     public boolean isValidTransactionId(String transactionId, Long userId) {
-        List<UserTransactions> userTransactions = userTransactionsRepository.findByTransactionIdAndUserId(transactionId, userId);
+        List<UserTransactions> userTransactions = userTransactionRepository.findByTransactionIdAndUserId(transactionId, userId);
         if (!userTransactions.isEmpty()) {
             return userTransactions.stream()
                     .map(UserTransactions::getCreatedTime)

@@ -1,10 +1,12 @@
 package com.controller.api;
 
+import com.common.ErrorCodes;
 import com.common.ObjectConversionUtil;
 import com.common.RandomGenerator;
 import com.controller.constants.ApiConstants;
 import com.controller.constants.ApiTransactions;
 import com.controller.handler.UserTransactionHandler;
+import com.dto.CaptchaResult;
 import com.dto.UserInfoDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.service.CaptchaValidatorService;
@@ -50,30 +52,42 @@ public class UserInfoController {
             String transactionId = RandomGenerator.getInstance().generateUUID() + RandomGenerator.getInstance().generateRandom();
 
             //logRequest
-            Long recordID = userTransactionsHandler.logRequest(request, transactionId, 0L, getClass().getSimpleName(), Thread.currentThread().getStackTrace()[1].getMethodName(), sanitizedRequestBody);
+            Long recordID = userTransactionsHandler.logRequest(request, transactionId, ApiConstants.DEFAULT_USERID, getClass().getSimpleName(), Thread.currentThread().getStackTrace()[1].getMethodName(), sanitizedRequestBody);
 
+            JSONObject requestObject = null;
             try {
-                UserInfoDTO requestObject = ObjectConversionUtil.getInstance().getObjectByJsonString(sanitizedRequestBody, new TypeReference<UserInfoDTO>() {});
+                requestObject = new JSONObject(sanitizedRequestBody);
 
-                // TODO Capctha validation
+                //Captcha Validation
+                CaptchaResult captchaResult = captchaService.isCaptchaValidated(transactionId, requestObject);
+                if(!captchaResult.isValidated()){
+                    //logResponse
+                    userTransactionsHandler.logFailedResponse(recordID, ApiConstants.DEFAULT_USERID, ApiTransactions.error(captchaResult.getErrCode()).toString(),captchaResult.getErrCode(),captchaResult.getErrMessage());
+                    ResponseEntity.ok().body(ApiTransactions.error(captchaResult.getErrCode())); // TODO test
+                }
 
-                UserInfoDTO userInfoDTO = userService.register(requestObject);
+                // UserInfoDTO requestObject = ObjectConversionUtil.getInstance().getObjectByJsonString(sanitizedRequestBody, new TypeReference<UserInfoDTO>() {});
+                UserInfoDTO userInfo = new UserInfoDTO();
+                userInfo.setEmail(requestObject.getString("email"));
+                userInfo.setPassword(requestObject.getString("password"));
+
+                UserInfoDTO userInfoDTO = userService.register(userInfo);
                 if (userInfoDTO != null) {
                     //logResponse
-                    userTransactionsHandler.logResponse(recordID, userInfoDTO.getId(), userInfoDTO.toString());
+                    userTransactionsHandler.logSuccessfulResponse(recordID, userInfoDTO.getId(), userInfoDTO.toString());
                     return ResponseEntity.ok().body(ApiTransactions.success(userInfoDTO)); // TODO test
                 } else {
                     //logResponse
-                    userTransactionsHandler.logResponse(recordID, 0L, ApiConstants.RESPONSE_FAILED);
-                    return ResponseEntity.ok().body(ApiTransactions.error("Kayıt gerçekleştirilemedi")); // TODO test
+                    userTransactionsHandler.logFailedResponse(recordID, ApiConstants.DEFAULT_USERID,ApiTransactions.error(ErrorCodes.ERR_6.name()).toString(), ErrorCodes.ERR_6.name(),ErrorCodes.ERR_6.getDescription());
+                    return ResponseEntity.ok().body(ApiTransactions.error(ErrorCodes.ERR_6.name())); // TODO test
                 }
             } catch (Exception e) {
                 LOGGER.error("UserInfoController ERROR - register > Request: {} , Exception: {} ", sanitizedRequestBody, e.getMessage());
                 //logResponse
-                userTransactionsHandler.logResponse(recordID, 0L, ApiConstants.RESPONSE_FAILED);
+                userTransactionsHandler.logFailedResponse(recordID, ApiConstants.DEFAULT_USERID, ApiTransactions.error(ErrorCodes.ERR_6.name()).toString(), ErrorCodes.ERR_6.name(),ErrorCodes.ERR_6.getDescription());
 
                 //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR: " + e.getMessage());
-                return ResponseEntity.ok().body(ApiTransactions.error("Kayıt gerçekleştirilemedi")); // TODO test
+                return ResponseEntity.ok().body(ApiTransactions.error(ErrorCodes.ERR_6.name())); // TODO test
             }
         } catch (Exception ex){
             LOGGER.error("UserInfoController ERROR - register > Request: {} , Exception: {} ", requestBody, ex.getMessage());
@@ -88,32 +102,43 @@ public class UserInfoController {
         String transactionId = RandomGenerator.getInstance().generateUUID() + RandomGenerator.getInstance().generateRandom();
         try {
             //logRequest
-            Long recordID = userTransactionsHandler.logRequest(request, transactionId, 0L, getClass().getSimpleName(), Thread.currentThread().getStackTrace()[1].getMethodName(), sanitizedRequestBody);
+            Long recordID = userTransactionsHandler.logRequest(request, transactionId, ApiConstants.DEFAULT_USERID, getClass().getSimpleName(), Thread.currentThread().getStackTrace()[1].getMethodName(), sanitizedRequestBody);
 
             JSONObject requestObject = null;
             try {
                 requestObject = new JSONObject(sanitizedRequestBody);
 
-
-                //TODO Login esnasında bir hata olursa önyüze transactionId iletilmez ve userTransactions.logResponse a önyüze dönülen login Error kaydı atılır
-                // Login de hata olmazsa önyüze transactionId iletilir ve sonraki işlemlerde userID ile beraber bu transactionId de beklenir.
-                // TransactionId sonraki her işlemde validasyondan geçer.
-
-                //TODO Capctha validation
+                //Captcha Validation
+                CaptchaResult captchaResult = captchaService.isCaptchaValidated(transactionId, requestObject);
+                if(!captchaResult.isValidated()){
+                    //logResponse
+                    userTransactionsHandler.logFailedResponse(recordID, ApiConstants.DEFAULT_USERID, ApiTransactions.error(captchaResult.getErrCode()).toString(),captchaResult.getErrCode(),captchaResult.getErrMessage());
+                    ResponseEntity.ok().body(ApiTransactions.error(captchaResult.getErrCode())); // TODO test
+                }
 
                 UserInfoDTO userInfoDTO = userService.getUserInfoByEmailAndPassword(requestObject.getString("email"), requestObject.getString("password"));
 
-                //logResponse
-                userTransactionsHandler.logResponse(recordID, userInfoDTO.getId(), userInfoDTO.toString());
+                //TODO aktiflik kontrolü
 
+                if(userInfoDTO == null){
+                    //logResponse
+                    userTransactionsHandler.logFailedResponse(recordID, ApiConstants.DEFAULT_USERID,ApiTransactions.error(ErrorCodes.ERR_3.name()).toString(), ErrorCodes.ERR_3.name(), ErrorCodes.ERR_3.getDescription());
+                    return ResponseEntity.ok().body(ApiTransactions.error(ErrorCodes.ERR_3.name())); // TODO test
+                }
+
+                //TODO Login de hata olmazsa önyüze transactionId iletilir ve sonraki işlemlerde userID ile beraber bu transactionId beklenir.
+                // TransactionId sonraki her işlemde validasyondan geçer.
+                //logResponse
+                userTransactionsHandler.logSuccessfulResponse(recordID, userInfoDTO.getId(), userInfoDTO.toString());
                 return ResponseEntity.ok().body(ApiTransactions.success(userInfoDTO)); // TODO test
             } catch (Exception e) {
                 LOGGER.error("UserInfoController ERROR - login > Request: {} , Exception: {} ", sanitizedRequestBody, e.getMessage());
                 //logResponse
-                userTransactionsHandler.logResponse(recordID, 0L, ApiConstants.RESPONSE_FAILED);
-                return ResponseEntity.ok().body(ApiTransactions.error("Giriş Başarısız")); // TODO test TODO generic
+                userTransactionsHandler.logFailedResponse(recordID, ApiConstants.DEFAULT_USERID, ApiTransactions.error(ErrorCodes.ERR_7.name()).toString(), ErrorCodes.ERR_7.name(),ErrorCodes.ERR_7.getDescription());
+                return ResponseEntity.ok().body(ApiTransactions.error(ErrorCodes.ERR_7.name())); // TODO test TODO generic
             }
         } catch (Exception ex){
+            //TODO logRequest sırasında hata alinirsa calisir
             LOGGER.error("UserInfoController ERROR - login > Request: {} , Exception: {} ", requestBody, ex.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiTransactions.error("Giriş Başarısız")); // TODO test
         }
