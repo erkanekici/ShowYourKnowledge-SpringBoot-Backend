@@ -11,6 +11,8 @@ logs
 
 #INTELLIJ
 .idea
+*/.idea
+.idea/*
 *.iml
 
 #ECLIPSE
