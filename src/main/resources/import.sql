@@ -1,0 +1,1 @@
+insert into gosterbilgini.topic(id,created_time,deleted,user_id_1,user_id_2) values ('id',SYSDATE(),false,1,2);

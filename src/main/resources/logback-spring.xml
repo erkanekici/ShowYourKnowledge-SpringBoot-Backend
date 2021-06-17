@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
+
+    <springProfile name="test">
+        <!-- Farklı bir spring profiline göre configürasyon için -->
+    </springProfile>
+
     <!--    <property name="LOGS" value="./logs" />-->
     <!--    ${LOG_PATH} yerine LOGS yazarsan path value olur-->
 

@@ -22,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -66,12 +68,20 @@ public class UserInfoController {
                     ResponseEntity.ok().body(ApiTransactions.error(captchaResult.getErrCode())); // TODO test
                 }
 
+                //TODO isEmailExist method
+
                 // UserInfoDTO requestObject = ObjectConversionUtil.getInstance().getObjectByJsonString(sanitizedRequestBody, new TypeReference<UserInfoDTO>() {});
                 UserInfoDTO userInfo = new UserInfoDTO();
                 userInfo.setEmail(requestObject.getString("email"));
+                //TODO password hash - userInfo.setPassword(passwordEncoder.encode(accountDto.getPassword()));
                 userInfo.setPassword(requestObject.getString("password"));
 
                 UserInfoDTO userInfoDTO = userService.register(userInfo);
+
+                //TODO ASYNC EXAMPLE
+//                CompletableFuture<UserInfoDTO> result = CompletableFuture.supplyAsync(() -> userService.register(userInfo), Executors.newCachedThreadPool());
+//                userInfoDTO = result.get();
+
                 if (userInfoDTO != null) {
                     //logResponse
                     userTransactionsHandler.logSuccessfulResponse(recordID, userInfoDTO.getId(), userInfoDTO.toString());

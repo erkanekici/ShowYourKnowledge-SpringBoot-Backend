@@ -1,11 +1,10 @@
 package com.controller.api;
 
 //import com.dao.DBUtil;
-import com.common.EncryptionDecryptionAES;
+import com.common.crypto.EncryptionAndHashingUtil;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -120,7 +119,7 @@ public class DocumentController {
     private String decryptDocumentId(String documentID, String transactionID) {
         if (documentID != null && !documentID.isEmpty()) {
             try {
-                return EncryptionDecryptionAES.getInstance().decrypt(documentID,44);
+                return EncryptionAndHashingUtil.getInstance().decryptAES(documentID,44);
             }
             catch (Exception e) {
                 LOGGER.error("DocumentService Call - Error Unencrypted documentID - transactionID: " + transactionID + " - documentID: " + documentID);
