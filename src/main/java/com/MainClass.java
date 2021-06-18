@@ -35,7 +35,7 @@ public class MainClass extends SpringBootServletInitializer {
 
     @EventListener
     public void contextRefreshedEvent(ContextRefreshedEvent event) { //This is running logic after the Spring context has been initialized
-        System.out.println("3 - EVENT");
+        System.out.println("3 - EventListener");
     }
 
     @Bean

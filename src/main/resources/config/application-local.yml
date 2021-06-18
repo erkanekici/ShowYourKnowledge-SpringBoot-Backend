@@ -27,7 +27,7 @@ spring:
     jpa:
         open-in-view: false
         hibernate:
-            ddl-auto: none #create veya cerate-drop modunda hibernate entitylere göre tabloları oluşturur ve import.sql çalışır
+            ddl-auto: none #create veya cerate-drop modunda hibernate entitylere göre tabloları oluşturur ve import .sql çalışır
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL8Dialect

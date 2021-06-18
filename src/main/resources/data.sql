@@ -1,1 +1,0 @@
-insert into gosterbilgini.user_info(created_time,deleted,activity,email,user_password,user_name,wrong_entry) values ('2011-12-18 13:17:17',false,1,'email','123','Erkan',1);

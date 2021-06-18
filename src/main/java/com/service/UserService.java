@@ -8,5 +8,4 @@ public interface UserService {
     UserInfoDTO register(UserInfoDTO userInfoDTO);
     UserInfoDTO getUserInfoByEmailAndPassword(String email, String password);
     List<UserInfoDTO> getUserInfoByUserRegisterTimeIntervalAndActivity(String registerTimeInterval, int active);
-    boolean deneme();
 }

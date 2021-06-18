@@ -8,8 +8,6 @@ import com.entity.UserInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,22 +97,5 @@ public class UserServiceImpl implements UserService {
         }
         return date.split(",");
     }
-
-    @Override
-    public synchronized boolean deneme() {
-        System.out.println("deneme giriş: " + Thread.currentThread().getId());
-        try {
-            System.out.println("SLEEP: " + Thread.currentThread().getId());
-            Thread.sleep(10000);
-            System.out.println("WAKEUP: " + Thread.currentThread().getId());
-        }
-        catch (Exception e)
-        {
-            System.out.println("INTERRUPT: " + Thread.currentThread().getId());
-        }
-        System.out.println("deneme çıkış: " + Thread.currentThread().getId());
-        return true;
-    }
-
 
 }
