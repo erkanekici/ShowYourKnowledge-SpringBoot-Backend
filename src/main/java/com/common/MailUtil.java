@@ -25,7 +25,7 @@ public class MailUtil {
         try {
             mimeMessage.setSubject("Hesap Aktivasyonu");
 
-            ClassPathResource imagePath = new ClassPathResource("static/images/unnamed.png");
+            ClassPathResource imagePath = new ClassPathResource("static/images/logo.png");
             String imageId = "logo";
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             String htmlText =
@@ -51,7 +51,7 @@ public class MailUtil {
             //ATTACHMENT
             //Yöntem1:
 //          try {
-//              File file = new ClassPathResource("gameLogo.png").getFile();
+//              File file = new ClassPathResource("logo.png").getFile();
 //              mimeMessageHelper.addAttachment("Notes", file);
 //          } catch (IOException e){
 //              logger.error("Mail ERROR => " + e.getMessage());
