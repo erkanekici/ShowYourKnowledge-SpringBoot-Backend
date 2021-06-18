@@ -4,6 +4,8 @@
 /**/application-test.yml
 *application-local.yml
 
+!/**/src/**/resources/config
+
 #COMPILE
 target
 build

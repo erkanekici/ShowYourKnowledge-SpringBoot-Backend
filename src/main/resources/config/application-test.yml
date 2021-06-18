@@ -11,7 +11,7 @@ logging:
                 type:
                     descriptor:
                         sql:
-                            BasicBinder: TRACE # Eger trace yaparsak sqlde giden parametrenin iceriginide goruruz
+                            BasicBinder: TRACE # Eger asd trace yaparsak sqlde giden parametrenin iceriginide goruruz
 spring:
     datasource:
         #url: jdbc:mysql://host.docker.internal:3306/gosterbilgini?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false&useLegacyDatetimeCode=false&serverTimezone=Turkey
