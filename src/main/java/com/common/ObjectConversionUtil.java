@@ -18,12 +18,12 @@ import java.util.List;
 public class ObjectConversionUtil {
 
     private static ObjectConversionUtil _this = null;
-
     public static ObjectConversionUtil getInstance() {
         if (_this == null)
             _this = new ObjectConversionUtil();
         return _this;
     }
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectConversionUtil.class);
 

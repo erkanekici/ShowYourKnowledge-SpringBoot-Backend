@@ -7,7 +7,6 @@ public class OsDetector {
     private static boolean isMac = false;
 
     private static OsDetector _this = null;
-
     public static OsDetector getInstance() {
         if (_this == null)
             _this = new OsDetector();

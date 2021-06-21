@@ -7,6 +7,7 @@ import java.util.Base64;
 
 //TODO TEST Et
 public class TripleDES {
+
     private String key;
     private String initializationVector;
 

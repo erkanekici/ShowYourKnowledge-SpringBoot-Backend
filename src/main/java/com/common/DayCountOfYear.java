@@ -9,7 +9,6 @@ public enum DayCountOfYear {
 
     private int dayCount;
 
-
     private DayCountOfYear(int dayCount) {
         this.dayCount = dayCount;
     }

@@ -8,9 +8,10 @@ import java.net.UnknownHostException;
 
 //TODO Test Et
 public class HostUtil {
+
     private static Logger LOGGER = LoggerFactory.getLogger(HostUtil.class);
 
-    public static String getLocalHostName() {
+    public static String getLocalHostName() { //Machine Name
         try {
             return InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
@@ -21,7 +22,7 @@ public class HostUtil {
 
     public static String getLocalHostAddress() {
         try {
-            return InetAddress.getLocalHost().getHostAddress();
+            return InetAddress.getLocalHost().getHostAddress(); // Machine IP Address
         } catch (UnknownHostException e) {
             LOGGER.error("HostUtil getLocalHostAddress UnknownHostException error", e);
             return "";
@@ -29,12 +30,12 @@ public class HostUtil {
     }
 
     public static String getRemoteHostName() {
-        return InetAddress.getLoopbackAddress().getHostName();
+        return InetAddress.getLoopbackAddress().getHostName(); // localHost
 
     }
 
     public static String getRemoteHostAddress() {
-        return InetAddress.getLoopbackAddress().getHostAddress();
+        return InetAddress.getLoopbackAddress().getHostAddress(); // 127.0.0.1
 
     }
 }

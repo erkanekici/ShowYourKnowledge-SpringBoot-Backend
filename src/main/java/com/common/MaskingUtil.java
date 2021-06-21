@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 public final class MaskingUtil {
 
     private static MaskingUtil _this = null;
-
     public static MaskingUtil getInstance() {
         if (_this == null)
             _this = new MaskingUtil();

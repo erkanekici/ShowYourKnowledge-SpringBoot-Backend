@@ -18,7 +18,6 @@ import java.util.UUID;
 public class EncryptionAndHashingUtil {
 
     private static EncryptionAndHashingUtil _this = null;
-
     public static EncryptionAndHashingUtil getInstance() {
         if (_this == null)
             _this = new EncryptionAndHashingUtil();
@@ -68,7 +67,7 @@ public class EncryptionAndHashingUtil {
 
     /** CUSTOM ENCRYPT-DECRYPT */
 
-    public static String decrypt(String sOrigHex) {
+    public String decrypt(String sOrigHex) {
         String sOrig = new String(toByteArray(sOrigHex,0,sOrigHex.length()));
         String k = sOrig.substring(4, sOrig.length() - 4);
         StringBuffer x = new StringBuffer();
@@ -80,7 +79,7 @@ public class EncryptionAndHashingUtil {
         return new String(new BigInteger(x.toString().getBytes()).xor(new BigInteger(s.getBytes())).toByteArray());
     }
 
-    public static String encrypt(String sOrig) {
+    public String encrypt(String sOrig) {
         String e = null;
         String s = null;
 
@@ -102,7 +101,7 @@ public class EncryptionAndHashingUtil {
         return toString((s.substring(0, 4) + e + s.substring(4)).getBytes());
     }
 
-    private static byte[] toByteArray(String s, int i, int j) {
+    private byte[] toByteArray(String s, int i, int j) {
         if (j % 2 != 0) {
             throw new IllegalArgumentException("Illegal length of Hex encoding: " + j + " (not n*2)");
         } else if (j == 0) {
@@ -126,11 +125,11 @@ public class EncryptionAndHashingUtil {
         }
     }
 
-    private static String toString(byte[] abyte0) {
+    private String toString(byte[] abyte0) {
         return toString(abyte0, 0, abyte0.length, true);
     }
 
-    private static String toString(byte[] abyte0, int i, int j, boolean flag) {
+    private String toString(byte[] abyte0, int i, int j, boolean flag) {
         String s = flag ? "0123456789ABCDEF" : "0123456789abcdef";
         StringBuffer stringbuffer = new StringBuffer(j * 2);
 

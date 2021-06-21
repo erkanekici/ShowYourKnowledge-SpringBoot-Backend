@@ -8,10 +8,7 @@ public enum ErrorCodes {
     ERR_4("Captcha null"),
     ERR_5("Captcha geçersiz"),
     ERR_6("Kayıt esnasında bir hata oluştu"),
-    ERR_7("Giriş esnasında bir hata oluştu"),
-    ERR_8("Hata"),
-    ERR_9("Hata"),
-    ERR_10("Hata");
+    ERR_7("Giriş esnasında bir hata oluştu");
 
     private String description;
     public String getDescription() {
