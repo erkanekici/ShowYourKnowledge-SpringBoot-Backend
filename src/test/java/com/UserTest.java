@@ -18,20 +18,8 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserTest {
 
-    /** JUnit NOTES
-     import org.junit.Assert; --> JUnit4 Assert (You can use in Junit5)
-     import org.junit.runner.RunWith; --> In JUnit4. Use @ExtendWith in Junit5 instead of @RunWith
-     import org.springframework.test.context.junit4.SpringRunner; --> Use SpringRunner.class with @RunWith in JUnit4
-                                                                      instead of SpringExtension in Junit5.
-    */
-
     @Autowired
     private UserService userService;
-
-    @BeforeEach
-    public void setup() {
-        System.out.println("Test Before");
-    }
 
     @Test
     @DisplayName("getUserInfoByEmailAndPassword-test")
@@ -60,7 +48,5 @@ public class UserTest {
 
         Assertions.assertTrue(UserInfoDTOList.size() > 0);
     }
-
-
 
 }

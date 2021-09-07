@@ -2,13 +2,22 @@
 **/src/main/resources/**/application-local.yml
 **/src/main/resources/**/application-test.yml
 
-#COMPILE
+#COMPILE AND PACKAGE FILES
 target
 build
 out
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
 #LOGGING
 logs
+*.log
 
 #INTELLIJ
 **/.idea
