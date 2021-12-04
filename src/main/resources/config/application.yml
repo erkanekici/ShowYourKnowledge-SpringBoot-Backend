@@ -3,7 +3,7 @@ google:
         secret: xxx
 logging:
     file:
-        path: C:/Users/showYourKnowledgeLogs
+        path: ./showYourKnowledgeLogs
     level:
         org:
             hibernate:
@@ -16,8 +16,8 @@ spring:
     datasource:
         #For docker --> url: jdbc:mysql://host.docker.internal:3306/gosterbilgini?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false&useLegacyDatetimeCode=false&serverTimezone=Turkey
         url: jdbc:mysql://localhost:3306/gosterbilgini?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false&useLegacyDatetimeCode=false&serverTimezone=Turkey
-        username: userName
-        password: password
+        username: root
+        password: root
         #driver-class-name: com.mysql.jdbc.Driver
     http:
         encoding:

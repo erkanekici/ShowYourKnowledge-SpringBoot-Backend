@@ -40,4 +40,11 @@ public class IntegerUtil {
         return nullSafeWithDefaultNo(number, 1);
     }
 
+    public static Integer getDefault(Integer val, Integer defaultVal) {
+        if (val == null)
+            return defaultVal;
+        else
+            return val;
+    }
+
 }

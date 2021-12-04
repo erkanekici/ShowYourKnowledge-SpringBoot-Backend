@@ -18,7 +18,6 @@ public class TextUtil {
         return _this;
     }
 
-
     public static String subString(String text, int endIndex) {
         return subString(text, 0, endIndex);
     }

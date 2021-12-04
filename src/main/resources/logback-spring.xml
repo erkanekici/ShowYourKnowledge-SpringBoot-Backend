@@ -2,7 +2,7 @@
 <configuration debug="true">
 
     <springProfile name="test">
-        <!-- Farklı bir spring profiline göre configürasyon için -->
+        <!-- use here for configuration for another spring profile -->
     </springProfile>
 
     <!--    <property name="LOGS" value="./logs" />-->

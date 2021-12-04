@@ -18,6 +18,8 @@ out
 #LOGGING
 logs
 *.log
+**/.showYourKnowledgeLogs
+showYourKnowledgeLogs
 
 #INTELLIJ
 **/.idea

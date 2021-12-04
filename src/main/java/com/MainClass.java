@@ -1,5 +1,7 @@
 package com;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,31 +19,33 @@ import java.util.Properties;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class MainClass extends SpringBootServletInitializer {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainClass.class);
+
     public static void main(String[]args){
         SpringApplication.run(MainClass.class,args);
     }
 
     @PostConstruct //It runs once, right after the beans are initialized.
     public void postConstruct() {
-        System.out.println("1 - PostConstruct");
+        LOGGER.info("1 - PostConstruct");
     }
 
     @Bean
     InitializingBean initializingBean() { //It works pretty similarly to PostConstruct
-        System.out.println("2 - InitializingBean");
+        LOGGER.info("2 - InitializingBean");
         return () -> {
         };
     }
 
     @EventListener
     public void contextRefreshedEvent(ContextRefreshedEvent event) { //This is running logic after the Spring context has been initialized
-        System.out.println("3 - EventListener");
+        LOGGER.info("3 - EventListener");
     }
 
     @Bean
     public CommandLineRunner commandLineRunner() { //It works at the end of application startup after the Spring application context has been initialized
         return (args) -> {
-            System.out.println("4 - CommandLineRunner");
+            LOGGER.info("4 - CommandLineRunner");
         };
     }
 
