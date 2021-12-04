@@ -62,6 +62,10 @@ public class ObjectConversionUtil {
         }
     }
 
+    public <T> T readDataByClass(String data, T className) throws JsonProcessingException {
+        return (T) new ObjectMapper().readValue(data, className.getClass());
+    }
+
     public <T> T readDataByDataType(String data, String dataType) {
         if (SpecialDataTypes.isObjectDataType(dataType)) {
             try{

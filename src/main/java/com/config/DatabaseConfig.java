@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
@@ -40,6 +44,24 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource getDataSource() {
+
+        //JNDI kullanimi icin
+//        Object lookup = null;
+//        try {
+//            Context context = new InitialContext();
+//            lookup = context.lookup("java:/myDb");
+//        } catch (NamingException e) {
+//            logger.error("NamingException error. Error: ");
+//            e.printStackTrace();
+//        }
+//
+//        if(lookup != null){
+//            DriverManagerDataSource dataSource = (DriverManagerDataSource) lookup;
+//        } else{
+//            logger.error("JNDI Context lookup null");
+//            throw new RuntimeException("JNDI Context lookup error");
+//        }
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(url);
         dataSource.setUsername(username);

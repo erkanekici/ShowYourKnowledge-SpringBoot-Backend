@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.entity.UserTransactions;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -39,5 +40,8 @@ public interface UserTransactionRepository extends JpaRepository<UserTransaction
             @Param("errorCode") String errorCode,
             @Param("errorMessage") String errorMessage
     );
+
+    @Query("select u from UserTransactions u")
+    List<UserTransactions> getAllTransactions(Pageable pageable);
 
 }
