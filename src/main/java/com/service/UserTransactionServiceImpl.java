@@ -8,6 +8,9 @@ import com.entity.UserTransactions;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +18,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
-public class UserTransactionServiceImpl implements UserTransactionService{
+public class UserTransactionServiceImpl implements UserTransactionService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTransactionServiceImpl.class);
     private static final long timeoutMinute = 12;
@@ -24,14 +27,16 @@ public class UserTransactionServiceImpl implements UserTransactionService{
 //    UserTransactionsRepository userTransactionsRepository;
 
     private final UserTransactionRepository userTransactionRepository;
-    public UserTransactionServiceImpl(UserTransactionRepository userTransactionRepository){
+
+    public UserTransactionServiceImpl(UserTransactionRepository userTransactionRepository) {
         this.userTransactionRepository = userTransactionRepository;
     }
 
     @Transactional
     @Override
     public Long saveRequestLog(UserTransactionsDTO userTransactionsDTO) {
-        UserTransactions userTransactions = ObjectConversionUtil.getInstance().convertObjectByObject(userTransactionsDTO, new TypeReference<UserTransactions>(){}); //TODO map metoduna cevir
+        UserTransactions userTransactions = ObjectConversionUtil.getInstance().convertObjectByObject(userTransactionsDTO, new TypeReference<UserTransactions>() {
+        }); //TODO map metoduna cevir
         userTransactions = this.userTransactionRepository.save(userTransactions);
         return userTransactions.getId();
     }
@@ -44,7 +49,7 @@ public class UserTransactionServiceImpl implements UserTransactionService{
             LOGGER.info("UserTransactionServiceImpl - saveSuccessfulResponseLog - Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         } else if (updatedRows == 0) {
             LOGGER.error("UserTransactionServiceImpl ERROR - saveSuccessfulResponseLog - No Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
-        } else{
+        } else {
             LOGGER.error("UserTransactionServiceImpl ERROR - saveSuccessfulResponseLog - Multi Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         }
     }
@@ -57,7 +62,7 @@ public class UserTransactionServiceImpl implements UserTransactionService{
             LOGGER.info("UserTransactionServiceImpl - saveFailedResponseLog - Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         } else if (updatedRows == 0) {
             LOGGER.error("UserTransactionServiceImpl ERROR - saveFailedResponseLog - No Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
-        } else{
+        } else {
             LOGGER.error("UserTransactionServiceImpl ERROR - saveFailedResponseLog - Multi Record Updated > recordId: {} , userId: {} , response: {} ", id, userId, response);
         }
     }
@@ -73,10 +78,35 @@ public class UserTransactionServiceImpl implements UserTransactionService{
                     .plusMinutes(timeoutMinute)
                     .isAfter(OffsetDateTime.now());
 
-            //get oldest date userTransaction record:
+            //to get oldest userTransaction record:
             //UserTransactions userTransactions = Collections.min(userTransactions, Comparator.comparing(UserTransactions::getCreatedTime));
         } else {
             return false;
         }
+    }
+
+    void pageableExample() {
+        boolean isRecordExist = true;
+        int pageNumber = 0;
+        Pageable pageable = getDefaultUserTransactionPageable(pageNumber);
+
+        while (isRecordExist) {
+            List<UserTransactions> userTransactions = userTransactionRepository.getAllTransactions(pageable);
+            if (!userTransactions.isEmpty()) {
+
+                pageNumber++;
+
+                //business transactions...
+
+            } else {
+                isRecordExist = false;
+            }
+        }
+    }
+
+    Pageable getDefaultUserTransactionPageable(int pageNumber) {
+        int pageSize = 100;
+        return PageRequest.of(pageNumber, pageSize);
+        //return PageRequest.of(pageNumber, pageSize, Sort.by("transactionId").descending().and(Sort.by("userId")));
     }
 }
