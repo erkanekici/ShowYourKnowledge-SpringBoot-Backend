@@ -14,7 +14,7 @@ CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
 
 
 
-#For external config file:
+#For cases where external config file is used:
 
 #FROM openjdk:8-jre-alpine
 #LABEL maintainer="<Hüseyin Erkan Ekici> h.erkanekici@gmail.com"

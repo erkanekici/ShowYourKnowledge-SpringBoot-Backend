@@ -19,6 +19,7 @@ spring:
         username: root
         password: root
         #driver-class-name: com.mysql.jdbc.Driver
+        #initialization-mode=always: always # always olursa data.sql'i calistirir
     http:
         encoding:
             charset: UTF-8
@@ -64,4 +65,4 @@ springfox:
         auto-startup: true
         swagger:
             v2:
-                path: v2/api-docs
+                path: /v2/api-docs
